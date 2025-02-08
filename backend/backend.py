@@ -30,9 +30,24 @@ features = df[feature_cols].values
 scaler = StandardScaler()
 features = scaler.fit_transform(features)
 
+def get_dietary_restrictions_text(food_item):
+    """Get a formatted string of dietary restrictions for a food item"""
+    restrictions = []
+    if food_item['Vegan']:
+        restrictions.append('Vegan')
+    if food_item['Vegetarian']:
+        restrictions.append('Vegetarian')
+    if food_item['Made Without Gluten']:
+        restrictions.append('Gluten-Free')
+    if food_item['Halal']:
+        restrictions.append('Halal')
+    if food_item['Organic']:
+        restrictions.append('Organic')
+    return ', '.join(restrictions) if restrictions else 'None'
+
 def get_meal_recommendations(preferences):
     """
-    Generate meal recommendations based on user preferences
+    Generate meal recommendations based on user preferences with strict dietary restriction filtering
     """
     try:
         # Create user preference vector
@@ -46,11 +61,20 @@ def get_meal_recommendations(preferences):
             'halal': 'Halal'
         }
         
+        # Create a mask for filtering based on dietary restrictions
+        valid_items_mask = np.ones(len(df), dtype=bool)
+        
         for pref_key, feature_key in dietary_mapping.items():
             if preferences.get(pref_key):
                 user_pref[feature_cols.index(feature_key)] = 1
+                # Strict filtering: only include items that match the dietary restriction
+                valid_items_mask &= (df[feature_key] == 1)
+                
+                # If vegan is selected, also enforce vegetarian
+                if pref_key == 'vegan':
+                    valid_items_mask &= (df['Vegetarian'] == 1)
         
-        # Set nutritional preferences
+        # Set nutritional preferences with higher weights for dietary restrictions
         target_calories = float(preferences.get('target_calories', 2000)) / 3  # per meal
         target_protein = float(preferences.get('target_protein', 50)) / 3  # per meal
         
@@ -64,6 +88,9 @@ def get_meal_recommendations(preferences):
         # Calculate similarity scores
         similarity_scores = cosine_similarity([user_pref_scaled], features)[0]
         
+        # Apply dietary restrictions mask
+        similarity_scores[~valid_items_mask] = -1
+        
         # Get recommendations for each meal type
         meal_plan = {}
         for meal_type in ['Breakfast', 'Lunch', 'Dinner']:
@@ -74,17 +101,21 @@ def get_meal_recommendations(preferences):
             meal_scores = similarity_scores.copy()
             meal_scores[~meal_mask] = -1
             
+            # Get indices of top matches that satisfy all constraints
             top_indices = np.argsort(meal_scores)[-3:][::-1]
             recommendations = []
             
             for idx in top_indices:
-                recommendations.append({
-                    'name': str(df.iloc[idx]['Food Name']),
-                    'calories': float(df.iloc[idx]['Calories']),
-                    'protein': float(df.iloc[idx]['Protein']),
-                    'carbs': float(df.iloc[idx]['Total Carbohydrates']),
-                    'fat': float(df.iloc[idx]['Total Fat'])
-                })
+                if meal_scores[idx] > -1:  # Only include valid recommendations
+                    food_item = df.iloc[idx]
+                    recommendations.append({
+                        'name': str(food_item['Food Name']),
+                        'calories': float(food_item['Calories']),
+                        'protein': float(food_item['Protein']),
+                        'carbs': float(food_item['Total Carbohydrates']),
+                        'fat': float(food_item['Total Fat']),
+                        'dietary_restrictions': get_dietary_restrictions_text(food_item)
+                    })
             
             meal_plan[meal_type.lower()] = recommendations
         

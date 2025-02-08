@@ -7,6 +7,7 @@ interface MealInfo {
   protein: number
   carbs: number
   fat: number
+  dietary_restrictions: string
 }
 
 interface MealPlan {
@@ -78,6 +79,10 @@ function App() {
           <span>Fat:</span>
           <span className="font-medium">{meal.fat}g</span>
         </p>
+        <div className="mt-2 pt-2 border-t border-gray-200">
+          <p className="text-xs text-gray-500">Dietary Info:</p>
+          <p className="text-sm font-medium text-gray-700">{meal.dietary_restrictions}</p>
+        </div>
       </div>
     </div>
   )
