@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import cosine_similarity
+import re
 
 app = Flask(__name__)
 CORS(app)
@@ -30,6 +31,46 @@ features = df[feature_cols].values
 scaler = StandardScaler()
 features = scaler.fit_transform(features)
 
+def extract_preferences_from_text(text):
+    """Extract dietary preferences and restrictions from natural language input"""
+    preferences = {
+        'vegan': False,
+        'vegetarian': False,
+        'gluten_free': False,
+        'halal': False,
+        'target_calories': 2000,
+        'target_protein': 50
+    }
+    
+    # Convert text to lowercase for easier matching
+    text = text.lower()
+    
+    # Check for dietary restrictions
+    if any(word in text for word in ['vegan', 'plant-based', 'no animal']):
+        preferences['vegan'] = True
+        preferences['vegetarian'] = True
+    
+    if any(word in text for word in ['vegetarian', 'no meat']):
+        preferences['vegetarian'] = True
+    
+    if any(word in text for word in ['gluten-free', 'gluten free', 'no gluten', 'celiac']):
+        preferences['gluten_free'] = True
+    
+    if any(word in text for word in ['halal']):
+        preferences['halal'] = True
+    
+    # Extract calorie targets
+    calorie_match = re.search(r'(\d+)\s*(?:kcal|calories|cal)', text)
+    if calorie_match:
+        preferences['target_calories'] = int(calorie_match.group(1))
+    
+    # Extract protein targets
+    protein_match = re.search(r'(\d+)\s*(?:g|grams)?\s*(?:of)?\s*protein', text)
+    if protein_match:
+        preferences['target_protein'] = int(protein_match.group(1))
+    
+    return preferences
+
 def get_dietary_restrictions_text(food_item):
     """Get a formatted string of dietary restrictions for a food item"""
     restrictions = []
@@ -45,10 +86,38 @@ def get_dietary_restrictions_text(food_item):
         restrictions.append('Organic')
     return ', '.join(restrictions) if restrictions else 'None'
 
+def generate_chat_response(preferences, meal_plan):
+    """Generate a natural language response based on the preferences and meal plan"""
+    response = "Based on your preferences, I've created a personalized meal plan for you.\n\n"
+    
+    # Add dietary restrictions summary
+    restrictions = []
+    if preferences['vegan']:
+        restrictions.append("vegan")
+    if preferences['vegetarian'] and not preferences['vegan']:
+        restrictions.append("vegetarian")
+    if preferences['gluten_free']:
+        restrictions.append("gluten-free")
+    if preferences['halal']:
+        restrictions.append("halal")
+    
+    if restrictions:
+        response += f"I've made sure all meals are {', '.join(restrictions)}. "
+    
+    response += f"The plan targets approximately {preferences['target_calories']} calories "
+    response += f"and {preferences['target_protein']}g of protein per day.\n\n"
+    
+    # Add meal plan details
+    for meal_type, meals in meal_plan.items():
+        response += f"{meal_type.capitalize()}:\n"
+        for meal in meals:
+            response += f"- {meal['name']} ({meal['calories']} cal, {meal['protein']}g protein)\n"
+        response += "\n"
+    
+    return response
+
 def get_meal_recommendations(preferences):
-    """
-    Generate meal recommendations based on user preferences with strict dietary restriction filtering
-    """
+    """Generate meal recommendations based on user preferences with strict dietary restriction filtering"""
     try:
         # Create user preference vector
         user_pref = np.zeros(len(feature_cols))
@@ -148,6 +217,33 @@ def get_meal_plan():
         return jsonify(meal_plan)
     except Exception as e:
         print(f"Error in get_meal_plan: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/chat', methods=['POST'])
+def chat():
+    try:
+        data = request.json
+        user_message = data.get('message', '')
+        
+        # Extract preferences from the user's message
+        preferences = extract_preferences_from_text(user_message)
+        
+        # Generate meal plan based on extracted preferences
+        meal_plan = get_meal_recommendations(preferences)
+        if meal_plan is None:
+            return jsonify({'error': 'Failed to generate meal plan'}), 500
+        
+        # Generate natural language response
+        response = generate_chat_response(preferences, meal_plan)
+        
+        return jsonify({
+            'message': response,
+            'meal_plan': meal_plan,
+            'extracted_preferences': preferences
+        })
+        
+    except Exception as e:
+        print(f"Error in chat endpoint: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
