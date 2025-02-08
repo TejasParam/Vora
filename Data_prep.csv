@@ -1,0 +1,168 @@
+Food Name,Calories,Total Fat,Cholesterol (mg),Sodium (mg),Total Carbohydrates,Total Sugar (g),Protein,Allergens,Vegan,Made Without Gluten,Vegetarian,Organic,Halal,Breakfast,Lunch,Dinner,Chase,Lenoir
+Waffle Bar,400,13,10,560,67,28,4,"Wheat, Milk",F,F,T,F,T,T,T,T,T,T
+Vegan Banana Blueberry Bread,160,7,0,1110,24,25,2,Wheat,T,F,T,F,T,T,F,F,T,T
+MWG Chocolate Chip Muffin,160,4,2.22,870,19,31,2,"Soy, Milk",F,T,T,F,T,T,F,F,T,T
+Butter Croissants,240,12,35,240,27,14,5,"Egg. Wheat, Milk",F,F,T,F,T,T,F,F,T,T
+Blueberry Cinnamon Coffee Cake,370,18,55,65,49,21,4,"Egg, Soy, Wheat, Milk",F,F,T,F,T,T,F,F,T,T
+Mini Donuts,130,6,0,220,17,14,2,"Egg, Soy, Wheat, Milk, Tree Nuts",F,F,T,F,T,T,F,F,T,T
+Coconut & Mango Overnight Oats,190,6,0,140,31,14,4,"Soy, Tree Nuts",T,T,T,F,T,T,F,F,T,T
+Chocolate Cappuccino Muffins,220,11,35,150,27,18,3,"Egg, Soy, Wheat, Milk",F,F,T,F,T,T,F,F,T,T
+Tofu Florentine,120,7,4,330,4,0,9,Soy,T,T,T,F,T,T,F,F,T,T
+Grits,120,0,0,140,23,0,2,,T,F,T,F,T,T,F,F,T,T
+Scrambled Eggs,180,14,365,360,0.8,0,12,"Egg, Milk",F,T,T,F,T,T,F,F,T,T
+Pancake Syrup,100,0,0,55,25,15,0,,T,T,T,F,T,T,F,F,T,T
+Whole Wheat French Toast,140,4,100,240,18,14,8,"Egg, Soy, Wheat, Milk",F,F,T,F,T,T,F,F,T,T
+Impossible Sausage Patty,130,130,0,380,5,0,7,"Soy, Tree Nuts",T,T,T,F,T,T,F,F,T,T
+O'Brien Potatoes,150,7,0,150,20,2,2,,T,T,T,F,T,T,F,F,T,T
+Biscuits,260,11,0,830,35,3,5,"Wheat, Milk",F,F,T,F,T,T,F,F,T,T
+Old Fashioned Oatmeal,150,3,0,5,27,1,5,,T,F,T,F,T,T,F,F,T,T
+Hash Brown Potato Patty,110,6,0,280,12,1,1,,T,T,T,F,T,T,F,F,T,T
+Bacon,90,8,25,420,0,0,6,,F,T,F,F,F,T,F,F,T,T
+Pork Sausage Gravy,110,7,15,140,8,5,4,Milk,F,T,F,F,F,T,F,F,T,T
+Turkey Bacon,30,2.5,10,150,0,0,2,,F,T,F,F,F,T,F,F,T,T
+Spicy Chicken Biscuit,480,25,20,1050,50,19,12,"Wheat, Milk",F,F,F,F,F,T,F,F,T,T
+Strawberry Banana Smoothie,130,0,0,20,31,20,2,Milk,F,F,F,T,T,T,T,T,T,T
+Blueberry Banana Smoothie,110,0,0,0,26,17,0.84,,T,T,T,F,T,T,T,T,T,T
+Bob's Red Mill Gluten Free Oats,210,5,0,160,33,1,7,,T,T,T,F,T,T,T,T,T,T
+MadeGood Vanilla Crispy Squares,80,1,0,100,18,7,1,,T,T,T,F,T,T,T,T,T,T
+Red Plate Foods Double Chocolate Chip Cookies,160,7,0,110,22,28,2,,T,T,T,F,T,T,T,T,T,T
+Bob's Red Mill GF Apple & Cinnamon Oats,270,5,0,310,48,22,7,,T,T,T,F,T,T,T,T,T,T
+O'Doughs Everything Bagel,200,4.5,0,530,38,8,4,"Soy, Sesame",T,T,T,F,T,T,T,T,T,T
+Red Plate Foods Ginger Cookies,160,6,0,160,23,24,1,,T,T,T,F,T,T,T,T,T,T
+Dolci di Maria Carrot Cake,500,24,0,430,72,48,2,Soy,T,T,T,F,T,T,F,F,T,T
+O'Doughs Multigrain Sandwich Slices,160,2,0,340,33,5,3,Soy,T,T,T,F,T,T,T,T,T,T
+Red Plate Foods Lemon Blueberry Muffin,370,15,0,320,58,50,2,,T,T,T,F,T,T,T,T,T,T
+Katz Cinnamon Donut Holes,110,5,10,150,15,6,0.99,Egg,F,T,T,F,T,T,T,T,T,T
+Low Fat Cottage Cheese,80,1,10,440,5,4,13,Milk,F,T,T,F,T,T,T,T,T,T
+O'Doughs Original Bagel,200,2.5,0,380,37,6,4,Soy,T,T,T,F,T,T,T,T,T,T
+Nonfat Strawberry Yogurt,120,0,2,95,24,31,6,Milk,F,T,T,F,T,T,T,T,T,T
+Red Plate Foods Oatmeal Cookies,150,5,0,100,25,25,1,,T,T,T,F,T,T,T,T,T,T
+Diced Pineapple,35,0,0,0,9,7,1,,T,T,T,F,T,T,T,T,T,T
+Katz Glazed Donut Holes,130,8,10,135,15,8,1,Egg,F,T,T,F,T,T,T,T,T,T
+O'Doughs Original Sandwich Slices,160,2,0,330,34,5,3,Soy,T,T,T,F,T,T,T,T,T,T
+Schar Ciabatta Roll,120,1.5,0,180,25,2,2,Soy,T,T,T,F,T,T,T,T,T,T
+Katz Powdered Donut Holes,170,10,15,160,19,9,1,Egg,F,T,T,F,T,T,T,T,T,T
+Raisins,180,0,0,15,44,40,1,,T,T,T,F,T,T,T,T,T,T
+O'Doughs Pumpernickel Bagel,200,6,0,350,38,6,5,"Soy, Sesame",T,T,T,F,T,T,T,T,T,T
+Apple Jacks,110,1,0,170,23,8,0,Wheat,F,F,T,F,T,T,T,T,T,T
+Udi's Everything Bagel,240,8,0,390,37,4,5,Egg,F,T,T,F,T,T,T,T,T,T
+Kinnikinnick Cinnamon Sugar Donuts,180,7,15,220,29,11,2,Egg,F,T,T,F,T,T,T,T,T,T
+Applesauce,45,0,0,10,12,8,0,,T,T,T,F,T,T,T,T,T,T
+Red Plate Foods Chocolate Chip Cookie,160,7,0,140,23,24,1,,T,T,T,F,T,T,T,T,T,T
+Frosted Flakes,170,0,0,190,42,15,3,Wheat,F,F,T,F,F,T,T,T,T,T
+Udi's Gluten-Free Hamburger Bun,190,5,0,360,32,5,5,Egg,F,T,T,F,T,T,T,T,T,T
+Honeydew Melon,40,0,0,20,10,9,1,,T,T,T,F,T,T,T,T,T,T
+Kinnikinnick Vanilla Glazed Donuts,210,6,15,200,37,19,2,Egg,F,T,T,F,T,T,T,T,T,T
+Nonfat Vanilla Yogurt,120,0,95,95,25,33,6,Milk,F,T,T,F,T,T,T,T,T,T
+Cheerios,80,1,0,100,16,1,3,,F,T,T,F,T,T,T,T,T,T
+Red Plate Foods Coffee Cake Muffin,430,17,0,430,65,78,4,,T,T,T,F,T,T,T,T,T,T
+Grapes,50,0,0,0,14,12,0.54,,T,T,T,F,T,T,T,T,T,T
+Udi's Multigrain Bread,140,5,0,260,23,3,2,Egg,F,T,T,F,T,T,T,T,T,T
+MadeGood Soft Baked Chocolate Chip Cookie,120,6,0,65,14,7,1,,T,T,T,F,T,T,T,T,T,T
+Rice Krispies,100,0,0,150,23,3,2,Wheat,F,F,T,F,T,T,T,T,T,T
+Red Plate Foods Dark Chocolate Muffins,350,12,0,410,61,70,4,,T,T,T,F,T,T,T,T,T,T
+Cocoa Puffs,130,2,0,200,31,13,1,Wheat,F,F,T,F,T,T,T,T,T,T
+Udi's White Bread,140,5,0,270,24,2,2,Egg,F,T,T,F,T,T,T,T,T,T
+MadeGood Soft Baked Double Chocolate Cookies,120,6,0,0,14,7,1,,T,T,T,F,T,T,T,T,T,T
+Froot Loops,110,1,0,135,26,12,1,"Soy, Wheat",F,F,T,F,T,T,T,T,T,T
+Cantaloupe,25,0,0,15,7,6,0.67,,T,T,T,F,T,T,T,T,T,T
+Cinnamon Toast Crunch,120,2.5,0,200,23,9,0.91,"Soy, Wheat",F,F,T,F,T,T,T,T,T,T
+Lucky Charms,110,1,0,170,22,2,2,,F,T,F,F,F,T,T,T,T,T
+Wheat Bread Slice,100,3,0,170,15,1,3,"Soy, Wheat",T,F,T,F,T,T,T,T,T,T
+White Bread,100,2.5,0,190,16,1,3,"Soy, Wheat",T,F,T,F,T,T,T,T,T,T
+Oats and Honey Granola,270,7,0,55,46,14,6,,F,T,T,F,T,T,T,T,T,T
+Multigrain Bagel,270,2,0,580,56,13,11,Wheat,T,F,T,F,T,T,T,T,T,T
+Blueberry Bagel,290,0,0,530,61,20,9,"Soy, Wheat",T,F,T,F,T,T,T,T,T,T
+Poppy Seed Bagel,290,0.5,0,560,59,12,10,Wheat,T,F,T,F,T,T,T,T,T,T
+Sesame,290,0.5,0,570,59,12,10,"Wheat, Sesame",T,F,T,F,T,T,T,T,T,T
+Whole Wheat Bagel,280,0,0,580,58,12,9,Wheat,T,F,T,F,T,T,T,T,T,T
+Everything Bagel,290,0,0,580,59,12,10,"Wheat, Sesame",T,F,T,F,T,T,T,T,T,T
+French Toast Bagel,280,0,0,600,59,16,9,Wheat,T,F,T,F,T,T,T,T,T,T
+Cinnamon Raisin Bagel,290,0,0,540,60,15,9,Wheat,T,F,T,F,T,T,T,T,T,T
+Cheddar Jalapeno,290,1.5,0,580,62,14,10,"Wheat, Milk",F,F,T,F,T,T,T,T,T,T
+Plain Bagel,290,0,0,590,59,12,10,Wheat,T,F,T,F,T,T,T,T,T,T
+Strawberry CHeesecake Ice Cream,190,8,25,65,27,34,2,"Wheat, Milk, Tree Nuts",F,F,T,F,T,F,T,T,T,T
+Salted Caramel Craze Ice Cream,230,10,35,180,32,43,3,"Soy, Milk, Tree Nuts",F,T,T,F,T,F,T,T,T,T
+Seasoned Baked Chicken Wings with Sweet Chili Sauce,260,16,125,300,7,5,20,,F,T,F,F,T,F,T,T,T,T
+Honey Cookies,110,4,20,70,16,8,2,Egg,F,T,T,F,T,F,T,T,T,T
+Vanilla Ice Cream,170,9,30,50,20,29,3,Milk,F,T,T,F,T,F,T,T,T,T
+Chocolate Ice Cream,170,8,35,45,22,31,3,Milk,F,T,T,F,T,F,T,T,T,T
+Vanilla Chocolate Cake,310,9,0,2640,42,57,42,,F,T,T,F,T,F,T,T,T,T
+Mint Chocolate Chip Ice Cream,200,11,40,60,23,32,3,"Soy, Milk, Tree Nuts",F,T,T,F,T,F,T,T,T,T
+Pepper Jack Mac & Cheese,610,33,105,790,46,5,31,"Wheat, Milk",F,F,T,F,T,F,T,T,T,T
+Herbed Balsamic Flank Steak,220,12,45,80,0,0,24,,F,T,F,F,F,F,T,T,T,T
+Chocolate Chip Blondies,280,12,30,300,42,58,3,"Egg, Soy, Wheat, Milk",F,F,T,F,T,F,T,T,T,T
+EVOO Mashed Potatoes,130,5,0,125,20,0.9,2,,T,T,T,F,T,F,T,T,T,T
+Roasted Butternut Squash,60,1.5,0,85,13,2,1,,T,T,T,F,T,F,T,T,T,T
+Fudge Brownies,250,7,0,200,44,62,3,"Egg, Soy, Wheat, Milk",F,F,T,F,T,F,T,T,T,T
+Deep Fried Onion Rings,160,5,0,310,26,3,3,Wheat,F,F,F,F,F,F,T,T,T,T
+Sauteed Spinach,45,1.5,0,250,5,0.6,4,,T,T,T,F,T,F,T,T,T,T
+Cookies,130,6,5,120,19,21,1,"Egg, Soy, Wheat, Milk",F,T,T,F,T,F,T,T,T,T
+Corn on the Cob,70,0.5,0,10,17,4,3,,T,T,T,F,T,F,T,T,T,T
+Gardenburger Black Bean Burger With Gluten-Free,375,12.5,5,1355,54,8,17.55,"Soy, Wheat, Tree Nuts, Milk, Egg",F,T,T,F,T,F,T,T,T,T
+Yellow Cake with Chocolate Fudge,150,4.5,5,190,27,29,2,"Egg, Soy, Wheat, Milk",F,F,T,F,T,F,T,T,T,T
+Grilled Cheese Sandwich,410,15,40,910,53,11,17,"Soy, Wheat, Milk",F,F,F,F,F,F,T,T,T,T
+Honey BBQ Sauce,70,0,0,210,17,16,0,,F,T,T,F,T,F,T,T,T,T
+Burger Patties,370,32,80,350,0,0,18,,F,T,F,F,F,F,T,T,T,T
+General Tso Crispy Tofu,150,6,0,260,11,7,12,"Soy, Wheat",T,F,T,F,T,F,T,T,T,T
+Shoestring Fries,180,10,0,30,20,0,2,,T,F,T,F,T,F,T,T,T,T
+Gardenburger Black Bean Burger,335,9,5,1265,52,8,18.55,"Soy, Wheat, Tree Nuts, Milk, Sesame",,,,,,F,T,T,T,T
+Salmon Penne with Vegetables,500,37,115,180,21,3,20,"Wheat, Milk, Fish",F,F,F,F,F,F,T,T,T,T
+Jasmine Rice,140,0,0,0,30,0,2,,T,T,T,F,T,F,T,T,T,T
+Steamed Broccoli,30,0,0,30,6,2,3,,T,T,T,F,T,F,T,T,T,T
+Sesame Roasted Carrots,70,3,0,220,11,5,1,Sesame,T,T,T,F,T,F,T,T,T,T
+Soy Bites,170,11,0,280,9,0.5,9,"Soy, Wheat, Sesame",T,F,T,F,T,F,T,T,T,T
+Classic Cheese Pizza,170,7,15,410,19,1,8,"Soy, Wheat, Milk",F,F,T,F,T,F,T,T,T,T
+Cheese Bread,190,9,20,460,18,0.68,9,"Soy, Wheat, Milk",F,F,T,F,T,F,T,T,T,T
+Classic Pepperoni Pizza,190,9,20,470,19,1,9,"Soy, Whear Milk",F,F,F,F,F,F,T,T,T,T
+Vegan Cheese Pizza,150,3,0,250,30,2,1,Soy,T,T,T,F,T,F,T,T,T,T
+Hamburger with Gluten-Free,625,41.5,85,975,38,8,24.55,"Tree Nuts, Soy, Milk, Egg",F,T,F,F,F,F,T,T,T,T
+Sushi Avocado Roll,110,5,0,35,15,1,2,Egg,F,T,T,F,T,F,T,T,T,T
+Tofu Poke Bowl,400,24,15,1290,39,24,9,"Egg, Soy, Wheat, Sesame",F,F,T,F,T,F,T,T,T,T
+Sushi Avocado Roll w/ Sriracha Mayonnaise,290,24,20,295,16,1.71,2,"Egg, Soy",F,T,T,F,T,F,T,T,T,T
+Hamburger,585,38,85,885,35,7,25.55,"Tree Nuts, Soy, Milk, Egg",F,F,F,F,F,F,T,T,T,T
+Tortellini with Meat Sauce,220,16,40,370,13,2,11,"Egg, Wheat, Milk",F,F,F,F,F,F,T,T,T,T
+White Alfredo Sauce w/ Pasta Noodles,340,14,50,330,43,8,12,"Wheat, Milk",F,F,T,F,T,F,T,T,T,T
+Tomato Lentil Soup,150,3,0,300,22,2,9,,T,F,T,F,T,F,T,T,T,T
+Manhattan Style Clam Chowder,40,1,2.16,430,4,0.81,4,"Fish, Shellfish",F,T,F,F,F,F,T,T,T,T
+Mediterranean Delight,370,18,25,650,35,6,20,Dairy,F,T,T,F,T,F,T,T,T,T
+Protein Power Bowl,520,33,180,1000,20,4,45,"Dairy, Egg",F,T,F,F,T,F,T,T,T,T
+Vegan Energy Bowl,430,16,0,400,55,8,24,,T,T,T,F,T,F,T,T,T,T
+Southwest Fiesta,480,21,50,850,45,7,35,"Dairy, Soy",F,T,T,F,T,F,T,T,T,T
+Refreshing Summer Mix,360,10,25,450,55,32,12,Dairy,F,T,T,F,T,F,T,T,T,T
+Classic Caesar,450,29,160,900,20,3,40,"Dairy, Egg",F,F,F,F,T,F,T,T,T,T
+White Alfredo Sauce w/ Chickpea Pasta,370,16.5,50,320,44,8,18,Milk,F,T,T,F,T,F,T,T,T,T
+Marinara Sauce w/ Pasta Noodles,205,2,0,110,40,6,7,Wheat,T,F,T,F,T,F,T,T,T,T
+Marinara Sauce w/ Chickpea Noodles,235,4.5,0.5,100,41,6,13,,T,T,T,F,T,F,T,T,T,T
+Classic Turkey and Swiss,540,22,65,1200,50,5,38,"Dairy, Egg, Gluten",F,F,F,F,T,F,T,T,T,T
+Roast Beef & Cheddar,490,18,70,1150,48,4,40,Dairy,F,F,F,F,T,F,T,T,T,T
+Italian Combo,620,30,85,1500,52,4,45,Dairy,F,F,F,F,T,F,T,T,T,T
+Grilled Chicken Avacado,480,15,80,920,38,3,42,,F,T,F,F,T,F,T,T,T,T
+Tuna Salad Delight,520,25,85,1300,50,5,36,"Dairy, Egg, Gluten",F,F,F,F,T,F,T,T,T,T
+Spicy Chipotle Chicken,610,28,80,1350,55,5,40,"Dairy, Egg",F,F,F,F,T,F,T,T,T,T
+Veggie Delight,420,12,0,800,55,7,12,Soy,T,F,T,F,T,F,T,T,T,T
+Gluten-Free Vegan Special,350,10,0,750,40,6,8,Soy,T,T,T,F,T,F,T,T,T,T
+Vegan Chik'n Tenders,200,8,0,440,15,0,17,"Soy, Wheat",T,F,T,F,T,F,F,T,T,T
+Honey BBQ Chicken,280,7,90,410,23,32,33,,F,T,F,F,T,F,F,T,T,T
+Braised Kale,150,6,0,230,22,5,10,,T,F,T,F,T,F,F,T,T,T
+Simply Roasted Green Chili Corn,120,3,0,125,21,5,2,,T,T,T,F,T,F,F,T,T,T
+Yellow Rice,130,2,0,70,25,0.63,2,,T,T,T,F,T,F,F,T,T,T
+Crispy Battered Cod,150,8,25,210,10,0,10,"Wheat, Milk, Fish",F,F,F,F,F,F,F,T,T,T
+Red Beans,140,3,0,300,20,2,7,,T,T,T,F,T,F,F,T,T,T
+Oven Roasted Green Beans,100,9,0,1160,7,3,2,,T,T,T,F,T,F,F,T,T,T
+Tomato and Cucumber Salad,50,3,0,350,4,3,0.76,"Soy, Sesame",T,T,T,F,T,F,F,T,T,T
+Classic Chicken Burrito,720,22,75,1400,85,5,42,"Dairy, Gluten",F,F,F,F,T,F,T,T,F,T
+Butternut Squash Basmati Rice,140,0,0,50,30,0,3,,T,T,T,F,T,F,T,T,T,T
+Coleslaw,240,20,20,480,12,10,0.91,Egg,F,T,T,F,T,F,T,T,T,T
+Chipotle Shrimp Bowl,750,28,115,1450,85,7,38,"Dairy, Shellfish, Egg",F,T,F,F,F,F,T,T,F,T
+Spicy Shrimp Burrito,780,30,110,1550,88,6,40,"Dairy, Gluten, Shellfish, Egg",F,F,F,F,F,F,T,T,F,T
+Chicken Burrito Bowl,680,20,70,1350,75,5,45,"Dairy,",F,T,F,F,T,F,T,T,F,T
+Spicy Veggie Burrito,690,18,20,1100,92,7,28,"Dairy, Gluten",F,F,T,F,T,F,T,T,F,T
+Vegan Burrito Bowl,520,14,0,950,80,6,18,,T,T,T,F,T,F,T,T,F,T
+Creamy Tomato Soup,160,10,35,480,16,7,5,"Soy, Wheat, Milk",F,F,T,F,T,F,T,T,F,T
+Jerk Chicken and Brown Rice Soup,90,3,10,260,12,2,4,"Soy, Wheat",F,F,F,F,T,F,T,T,F,T
+Classic Chicken Marinara Pasta,720,14,75,1250,105,12,42,"Dairy, Gluten",F,F,F,F,F,F,T,T,T,F
+Pesto Alfredo Ham Pasta,780,28,90,1400,100,10,45,"Dairy, Gluten",F,F,F,F,F,F,T,T,T,F
+Spinach & Mushroom Marinara Pasta,670,10,15,1100,110,14,30,"Dairy, Gluten",F,F,T,F,T,F,T,T,T,F
+Vegan Primavera Pasta,620,7,0,1000,110,13,22,Gluten,T,F,T,F,T,F,T,T,T,F
+Chicken & Veggie Alfredo Pasta,750,26,85,1300,98,9,40,Dairy. Gluten,F,F,F,F,T,F,T,T,T,F
