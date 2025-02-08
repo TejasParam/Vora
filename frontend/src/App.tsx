@@ -21,6 +21,12 @@ interface ChatMessage {
   content: string
 }
 
+interface MealSelection {
+  breakfast: MealInfo[];
+  lunch: MealInfo[];
+  dinner: MealInfo[];
+}
+
 function App() {
   const [preferences, setPreferences] = useState({
     vegan: false,
@@ -41,6 +47,11 @@ function App() {
     }
   ])
   const [userInput, setUserInput] = useState('')
+  const [selectedMeals, setSelectedMeals] = useState<MealSelection>({
+    breakfast: [],
+    lunch: [],
+    dinner: []
+  })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -121,8 +132,91 @@ function App() {
     }
   }
 
-  const MealCard = ({ meal }: { meal: MealInfo }) => (
-    <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+  const calculateTotalMacros = () => {
+    const allMeals = [
+      ...selectedMeals.breakfast,
+      ...selectedMeals.lunch,
+      ...selectedMeals.dinner
+    ];
+    
+    return {
+      calories: allMeals.reduce((sum, meal) => sum + meal.calories, 0),
+      protein: allMeals.reduce((sum, meal) => sum + meal.protein, 0),
+      carbs: allMeals.reduce((sum, meal) => sum + meal.carbs, 0),
+      fat: allMeals.reduce((sum, meal) => sum + meal.fat, 0)
+    };
+  };
+
+  const calculateProgress = () => {
+    const totals = calculateTotalMacros();
+    const targets = {
+      calories: preferences.target_calories,
+      protein: preferences.target_protein,
+      carbs: preferences.target_calories * 0.5 / 4, // 50% of calories from carbs
+      fat: preferences.target_calories * 0.3 / 9 // 30% of calories from fat
+    };
+
+    return {
+      calories: (totals.calories / targets.calories) * 100,
+      protein: (totals.protein / targets.protein) * 100,
+      carbs: (totals.carbs / targets.carbs) * 100,
+      fat: (totals.fat / targets.fat) * 100
+    };
+  };
+
+  const handleMealSelect = (mealType: keyof MealSelection, meal: MealInfo) => {
+    setSelectedMeals(prev => {
+      const currentSelections = prev[mealType];
+      const mealIndex = currentSelections.findIndex(m => m.name === meal.name);
+      
+      if (mealIndex >= 0) {
+        // Remove meal if already selected
+        return {
+          ...prev,
+          [mealType]: currentSelections.filter(m => m.name !== meal.name)
+        };
+      } else {
+        // Add meal if not selected
+        return {
+          ...prev,
+          [mealType]: [...currentSelections, meal]
+        };
+      }
+    });
+  };
+
+  const handleClearSelections = () => {
+    setSelectedMeals({
+      breakfast: [],
+      lunch: [],
+      dinner: []
+    });
+  };
+
+  const MacroProgressBar = ({ label, value, max, unit }: { label: string; value: number; max: number; unit: string }) => {
+    const percentage = Math.min((value / max) * 100, 100);
+    return (
+      <div className="space-y-1">
+        <div className="flex justify-between text-sm">
+          <span>{label}</span>
+          <span>{Math.round(value)}/{Math.round(max)}{unit}</span>
+        </div>
+        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div 
+            className={`h-full rounded-full ${percentage > 100 ? 'bg-red-500' : 'bg-primary-500'}`}
+            style={{ width: `${Math.min(percentage, 100)}%` }}
+          />
+        </div>
+      </div>
+    );
+  };
+
+  const MealCard = ({ meal, type, isSelected }: { meal: MealInfo; type: keyof MealSelection; isSelected: boolean }) => (
+    <div 
+      onClick={() => handleMealSelect(type, meal)}
+      className={`bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-2
+        ${isSelected ? 'border-primary-500' : 'border-transparent'}`}
+    >
       <h4 className="font-semibold text-lg text-gray-800">{meal.name}</h4>
       <div className="mt-2 space-y-1 text-sm text-gray-600">
         <p className="flex justify-between">
@@ -289,42 +383,68 @@ function App() {
         )}
 
         {mealPlan && (
-          <div className="mt-8 bg-white rounded-xl shadow-xl overflow-hidden">
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Your Personalized Meal Plan</h2>
+          <div className="mt-8 space-y-8">
+            {/* Progress Bars */}
+            <div className="bg-white rounded-xl shadow-xl p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-bold text-gray-900">Daily Nutrition Progress</h2>
                 <button
-                  onClick={handleRegenerate}
-                  disabled={loading}
-                  className={`px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white 
-                    ${loading ? 'bg-gray-400' : 'bg-primary-600 hover:bg-primary-700'} 
-                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 flex items-center gap-2`}
+                  onClick={handleClearSelections}
+                  className="px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 
+                    border border-red-600 hover:border-red-700 rounded-md transition-colors
+                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                 >
-                  {loading ? (
-                    <>
-                      <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      <span>Regenerating...</span>
-                    </>
-                  ) : (
-                    <>
-                      <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                      </svg>
-                      <span>Regenerate Plan</span>
-                    </>
-                  )}
+                  Clear All Selections
                 </button>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="space-y-4">
+                <MacroProgressBar 
+                  label="Calories" 
+                  value={calculateTotalMacros().calories} 
+                  max={preferences.target_calories}
+                  unit="kcal"
+                />
+                <MacroProgressBar 
+                  label="Protein" 
+                  value={calculateTotalMacros().protein} 
+                  max={preferences.target_protein}
+                  unit="g"
+                />
+                <MacroProgressBar 
+                  label="Carbs" 
+                  value={calculateTotalMacros().carbs} 
+                  max={preferences.target_calories * 0.5 / 4}
+                  unit="g"
+                />
+                <MacroProgressBar 
+                  label="Fat" 
+                  value={calculateTotalMacros().fat} 
+                  max={preferences.target_calories * 0.3 / 9}
+                  unit="g"
+                />
+              </div>
+            </div>
+
+            {/* Meal Selection */}
+            <div className="bg-white rounded-xl shadow-xl p-6">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Select Your Meals</h2>
+              <div className="space-y-8">
                 {Object.entries(mealPlan).map(([mealType, meals]) => (
-                  <div key={mealType} className="space-y-4">
-                    <h3 className="text-lg font-semibold text-gray-900 capitalize">{mealType}</h3>
-                    {meals.map((meal: MealInfo, index: number) => (
-                      <MealCard key={index} meal={meal} />
-                    ))}
+                  <div key={mealType}>
+                    <h3 className="text-xl font-semibold text-gray-900 capitalize mb-4">
+                      {mealType} ({selectedMeals[mealType as keyof MealSelection].length} selected)
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+                      {meals.map((meal: MealInfo, index: number) => (
+                        <MealCard 
+                          key={index} 
+                          meal={meal} 
+                          type={mealType as keyof MealSelection}
+                          isSelected={selectedMeals[mealType as keyof MealSelection]
+                            .some(m => m.name === meal.name)}
+                        />
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>

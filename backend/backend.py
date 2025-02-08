@@ -175,13 +175,11 @@ def get_meal_recommendations(preferences):
             meal_scores[valid_meals] += np.random.uniform(-0.1, 0.1, size=np.sum(valid_meals))
             
             # Get indices of top matches that satisfy all constraints
-            top_indices = np.argsort(meal_scores)[-5:][::-1]  # Get top 5 instead of 3
+            top_indices = np.argsort(meal_scores)[-5:][::-1]  # Get top 5
             recommendations = []
             
-            # Randomly select 3 from top 5
-            selected_indices = np.random.choice(top_indices, min(3, len(top_indices)), replace=False)
-            
-            for idx in selected_indices:
+            # Use all 5 top matches instead of randomly selecting 3
+            for idx in top_indices:
                 if meal_scores[idx] > -1:  # Only include valid recommendations
                     food_item = df.iloc[idx]
                     recommendations.append({
