@@ -27,8 +27,17 @@ interface MealSelection {
   dinner: MealInfo[];
 }
 
+interface Preferences {
+  vegan: boolean;
+  vegetarian: boolean;
+  gluten_free: boolean;
+  halal: boolean;
+  target_calories: number;
+  target_protein: number;
+}
+
 function App() {
-  const [preferences, setPreferences] = useState({
+  const [preferences, setPreferences] = useState<Preferences>({
     vegan: false,
     vegetarian: false,
     gluten_free: false,
@@ -52,6 +61,7 @@ function App() {
     lunch: [],
     dinner: []
   })
+  const [activeTab, setActiveTab] = useState<'chat' | 'preferences' | 'meal-plan'>('chat')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -109,7 +119,7 @@ function App() {
     const { name, value, type, checked } = e.target
     setPreferences(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : parseFloat(value)
+      [name]: type === 'checkbox' ? checked : Number(value)
     }))
   }
 
@@ -244,211 +254,193 @@ function App() {
   )
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 py-6 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Smart Meal Planner</h1>
-          <p className="text-lg text-gray-600">Get personalized meal recommendations based on your preferences</p>
+        <div className="text-center mb-12">
+          <h1 className="text-5xl font-bold text-green-800 mb-4">Vora Meal Planner</h1>
+          <p className="text-xl text-gray-600">Your personal AI-powered nutrition assistant</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Chat Interface */}
-          <div className="bg-white rounded-xl shadow-xl overflow-hidden">
-            <div className="p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Chat with AI Assistant</h2>
-              <div className="h-96 overflow-y-auto mb-4 space-y-4 p-4 bg-gray-50 rounded-lg">
-                {chatMessages.map((message, index) => (
+        {/* Tabs */}
+        <div className="flex justify-center mb-8">
+          <nav className="flex space-x-4 bg-white rounded-lg p-1 shadow-md">
+            <button
+              onClick={() => setActiveTab('chat')}
+              className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+                activeTab === 'chat' ? 'bg-green-100 text-green-600' : 'text-gray-600 hover:text-green-600'
+              }`}
+            >
+              Chat
+            </button>
+            <button
+              onClick={() => setActiveTab('preferences')}
+              className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+                activeTab === 'preferences' ? 'bg-green-100 text-green-600' : 'text-gray-600 hover:text-green-600'
+              }`}
+            >
+              Preferences
+            </button>
+            <button
+              onClick={() => setActiveTab('meal-plan')}
+              className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
+                activeTab === 'meal-plan' ? 'bg-green-100 text-green-600' : 'text-gray-600 hover:text-green-600'
+              }`}
+            >
+              Meal Plan
+            </button>
+          </nav>
+        </div>
+
+        {/* Tab Content */}
+        <div className="space-y-8">
+          {/* Chat Tab */}
+          {activeTab === 'chat' && (
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <div className="mb-6 max-h-[400px] overflow-y-auto">
+                {chatMessages.map((msg, index) => (
                   <div
                     key={index}
-                    className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
+                    className={`chat-message ${
+                      msg.type === 'user' ? 'chat-message-user' : 'chat-message-assistant'
+                    }`}
                   >
-                    <div
-                      className={`max-w-[80%] rounded-lg p-3 ${
-                        message.type === 'user'
-                          ? 'bg-primary-500 text-white'
-                          : 'bg-gray-200 text-gray-800'
-                      }`}
-                    >
-                      <p className="whitespace-pre-wrap">{message.content}</p>
-                    </div>
+                    {msg.content}
                   </div>
                 ))}
               </div>
-              <form onSubmit={handleChatSubmit} className="flex gap-2">
+              <form onSubmit={handleChatSubmit} className="flex gap-4">
                 <input
                   type="text"
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
-                  placeholder="Describe your dietary preferences and goals..."
-                  className="flex-1 rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                  placeholder="Tell me your dietary preferences..."
+                  className="input-field flex-grow"
                   disabled={loading}
                 />
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white 
-                    ${loading ? 'bg-gray-400' : 'bg-primary-600 hover:bg-primary-700'} 
-                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500`}
-                >
-                  Send
+                <button type="submit" className="btn-primary" disabled={loading}>
+                  {loading ? 'Processing...' : 'Send'}
                 </button>
               </form>
             </div>
-          </div>
+          )}
 
-          {/* Form Interface */}
-          <div className="bg-white rounded-xl shadow-xl overflow-hidden">
-            <div className="p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">Manual Preferences</h2>
+          {/* Preferences Tab */}
+          {activeTab === 'preferences' && (
+            <div className="bg-white rounded-xl shadow-lg p-6">
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-gray-900">Dietary Restrictions</h3>
-                  <div className="space-y-3">
-                    {['vegan', 'vegetarian', 'gluten_free', 'halal'].map((pref) => (
-                      <div key={pref} className="flex items-center">
-                        <input
-                          type="checkbox"
-                          id={pref}
-                          name={pref}
-                          checked={preferences[pref as keyof typeof preferences] as boolean}
-                          onChange={handleInputChange}
-                          className="h-5 w-5 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
-                        />
-                        <label htmlFor={pref} className="ml-3 text-gray-700 font-medium capitalize">
-                          {pref.replace('_', ' ')}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Dietary Preferences</h3>
+                    <div className="space-y-2">
+                      {['vegan', 'vegetarian', 'gluten_free', 'halal'].map((pref) => (
+                        <label key={pref} className="flex items-center space-x-3">
+                          <input
+                            type="checkbox"
+                            name={pref}
+                            checked={preferences[pref as keyof typeof preferences]}
+                            onChange={handleInputChange}
+                            className="form-checkbox h-5 w-5 text-indigo-600"
+                          />
+                          <span className="text-gray-700 capitalize">{pref.replace('_', ' ')}</span>
                         </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-lg font-medium text-gray-900">Nutritional Goals</h3>
-                  <div>
-                    <label htmlFor="target_calories" className="block text-sm font-medium text-gray-700">
-                      Target Daily Calories
-                    </label>
-                    <input
-                      type="number"
-                      name="target_calories"
-                      id="target_calories"
-                      value={preferences.target_calories}
-                      onChange={handleInputChange}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="target_protein" className="block text-sm font-medium text-gray-700">
-                      Target Daily Protein (g)
-                    </label>
-                    <input
-                      type="number"
-                      name="target_protein"
-                      id="target_protein"
-                      value={preferences.target_protein}
-                      onChange={handleInputChange}
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                    />
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className={`w-full px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white 
-                    ${loading ? 'bg-gray-400' : 'bg-primary-600 hover:bg-primary-700'} 
-                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500`}
-                >
-                  Generate Plan
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-
-        {error && (
-          <div className="mt-6 rounded-md bg-red-50 p-4">
-            <div className="flex">
-              <div className="flex-shrink-0">
-                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <div className="ml-3">
-                <h3 className="text-sm font-medium text-red-800">{error}</h3>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {mealPlan && (
-          <div className="mt-8 space-y-8">
-            {/* Progress Bars */}
-            <div className="bg-white rounded-xl shadow-xl p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-bold text-gray-900">Daily Nutrition Progress</h2>
-                <button
-                  onClick={handleClearSelections}
-                  className="px-4 py-2 text-sm font-medium text-red-600 hover:text-red-700 
-                    border border-red-600 hover:border-red-700 rounded-md transition-colors
-                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-                >
-                  Clear All Selections
-                </button>
-              </div>
-              <div className="space-y-4">
-                <MacroProgressBar 
-                  label="Calories" 
-                  value={calculateTotalMacros().calories} 
-                  max={preferences.target_calories}
-                  unit="kcal"
-                />
-                <MacroProgressBar 
-                  label="Protein" 
-                  value={calculateTotalMacros().protein} 
-                  max={preferences.target_protein}
-                  unit="g"
-                />
-                <MacroProgressBar 
-                  label="Carbs" 
-                  value={calculateTotalMacros().carbs} 
-                  max={preferences.target_calories * 0.5 / 4}
-                  unit="g"
-                />
-                <MacroProgressBar 
-                  label="Fat" 
-                  value={calculateTotalMacros().fat} 
-                  max={preferences.target_calories * 0.3 / 9}
-                  unit="g"
-                />
-              </div>
-            </div>
-
-            {/* Meal Selection */}
-            <div className="bg-white rounded-xl shadow-xl p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Select Your Meals</h2>
-              <div className="space-y-8">
-                {Object.entries(mealPlan).map(([mealType, meals]) => (
-                  <div key={mealType}>
-                    <h3 className="text-xl font-semibold text-gray-900 capitalize mb-4">
-                      {mealType} ({selectedMeals[mealType as keyof MealSelection].length} selected)
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-                      {meals.map((meal: MealInfo, index: number) => (
-                        <MealCard 
-                          key={index} 
-                          meal={meal} 
-                          type={mealType as keyof MealSelection}
-                          isSelected={selectedMeals[mealType as keyof MealSelection]
-                            .some(m => m.name === meal.name)}
-                        />
                       ))}
                     </div>
                   </div>
-                ))}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold text-gray-900">Nutritional Goals</h3>
+                    <div className="space-y-4">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">
+                          Target Calories
+                        </label>
+                        <input
+                          type="number"
+                          name="target_calories"
+                          value={preferences.target_calories}
+                          onChange={handleInputChange}
+                          className="input-field mt-1"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700">
+                          Target Protein (g)
+                        </label>
+                        <input
+                          type="number"
+                          name="target_protein"
+                          value={preferences.target_protein}
+                          onChange={handleInputChange}
+                          className="input-field mt-1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-end space-x-4">
+                  <button type="submit" className="btn-primary" disabled={loading}>
+                    {loading ? 'Generating...' : 'Generate Meal Plan'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          )}
+
+          {/* Meal Plan Tab */}
+          {activeTab === 'meal-plan' && mealPlan && (
+            <div className="space-y-8">
+              {/* Macro Progress */}
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Daily Progress</h3>
+                <div className="space-y-4">
+                  <MacroProgressBar
+                    label="Calories"
+                    value={calculateTotalMacros().calories}
+                    max={preferences.target_calories}
+                    unit="kcal"
+                  />
+                  <MacroProgressBar
+                    label="Protein"
+                    value={calculateTotalMacros().protein}
+                    max={preferences.target_protein}
+                    unit="g"
+                  />
+                </div>
+              </div>
+
+              {/* Meal Sections */}
+              {['breakfast', 'lunch', 'dinner'].map((mealType) => (
+                <div key={mealType} className="bg-white rounded-xl shadow-lg p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 capitalize mb-6">{mealType}</h3>
+                  <div className="meal-grid">
+                    {mealPlan[mealType as keyof MealPlan].map((meal) => (
+                      <MealCard
+                        key={meal.name}
+                        meal={meal}
+                        type={mealType as keyof MealSelection}
+                        isSelected={selectedMeals[mealType as keyof MealSelection].some(
+                          (m) => m.name === meal.name
+                        )}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              <div className="flex justify-end space-x-4">
+                <button onClick={handleClearSelections} className="btn-secondary">
+                  Clear Selections
+                </button>
+                <button onClick={handleRegenerate} className="btn-primary" disabled={loading}>
+                  {loading ? 'Regenerating...' : 'Regenerate Plan'}
+                </button>
               </div>
             </div>
+          )}
+        </div>
+
+        {error && (
+          <div className="mt-4 p-4 bg-red-50 text-red-700 rounded-lg">
+            {error}
           </div>
         )}
       </div>
