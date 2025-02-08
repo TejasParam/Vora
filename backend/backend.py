@@ -166,15 +166,22 @@ def get_meal_recommendations(preferences):
             # Filter by meal type
             meal_mask = df[meal_type] == 1
             
-            # Get top 3 recommendations for each meal
+            # Get top recommendations for each meal with some randomness
             meal_scores = similarity_scores.copy()
             meal_scores[~meal_mask] = -1
             
+            # Add small random variation to scores to get different results each time
+            valid_meals = meal_scores > -1
+            meal_scores[valid_meals] += np.random.uniform(-0.1, 0.1, size=np.sum(valid_meals))
+            
             # Get indices of top matches that satisfy all constraints
-            top_indices = np.argsort(meal_scores)[-3:][::-1]
+            top_indices = np.argsort(meal_scores)[-5:][::-1]  # Get top 5 instead of 3
             recommendations = []
             
-            for idx in top_indices:
+            # Randomly select 3 from top 5
+            selected_indices = np.random.choice(top_indices, min(3, len(top_indices)), replace=False)
+            
+            for idx in selected_indices:
                 if meal_scores[idx] > -1:  # Only include valid recommendations
                     food_item = df.iloc[idx]
                     recommendations.append({
