@@ -2,12 +2,19 @@
 node_modules/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+*.so
 
 # Environment
 .env
 .env.local
 .env.*.local
 venv/
+env/
+ENV/
+.python-version
 
 # Build
 dist/
@@ -35,9 +42,9 @@ Thumbs.db
 
 # Python
 *.py[cod]
-*.so
-.env.local
 .pytest_cache/
+.coverage
+htmlcov/
 
 # Node/React
 /frontend/node_modules
@@ -47,8 +54,6 @@ Thumbs.db
 
 # Testing
 coverage/
-.coverage
-htmlcov/
 
 # Misc
 *.log 
