@@ -2,37 +2,25 @@
   "version": 2,
   "functions": {
     "api/**": {
-      "excludeFiles": "{.next,*.cache,node_modules,public,app}/**"
+      "runtime": "python3.9",
+      "excludeFiles": "{.next,*.cache,node_modules,public,app}/**",
+      "maxDuration": 10
     }
   },
-  "builds": [
-    {
-      "src": "backend/backend.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "runtime": "python3.9"
-      }
-    },
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
+  "outputDirectory": "frontend/dist",
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "installCommand": "npm install",
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/backend.py"
+      "dest": "/api/backend/backend.py"
     },
     {
       "handle": "filesystem"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/dist/$1"
+      "dest": "/"
     }
   ]
 } 
