@@ -52,6 +52,11 @@ interface RatingsData {
   favorites: Rating[];
 }
 
+interface MenuScraperProps {
+  onSuccess: (data: any) => void;
+  onError: (error: string) => void;
+}
+
 function App() {
   const [preferences, setPreferences] = useState<Preferences>({
     vegan: false,
@@ -562,6 +567,72 @@ function App() {
     </div>
   )
 
+  const MenuScraper: React.FC<MenuScraperProps> = ({ onSuccess, onError }) => {
+    const [url, setUrl] = useState('');
+    const [loading, setLoading] = useState(false);
+    const { getAccessTokenSilently } = useAuth0();
+
+    const handleScrape = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setLoading(true);
+
+      try {
+        const token = await getAccessTokenSilently();
+        const response = await axios.post('/api/scrape_menu', 
+          { url },
+          { 
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+
+        onSuccess(response.data.data);
+      } catch (error: any) {
+        onError(error.response?.data?.error || 'Failed to scrape menu');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    return (
+      <div className="glass-effect rounded-2xl p-6 mb-8">
+        <h3 className="fancy-title text-2xl mb-4">Custom Menu Scraper</h3>
+        <form onSubmit={handleScrape} className="space-y-4">
+          <div>
+            <label className="fancy-label">Dining Hall Menu URL</label>
+            <input
+              type="url"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="https://dining.example.edu/menu"
+              className="fancy-input w-full"
+              required
+            />
+          </div>
+          <button 
+            type="submit" 
+            className="btn-primary"
+            disabled={loading}
+          >
+            {loading ? (
+              <span className="flex items-center">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Scraping Menu...
+              </span>
+            ) : (
+              'Scrape Menu'
+            )}
+          </button>
+        </form>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-screen relative">
       {/* Particles container */}
@@ -658,61 +729,71 @@ function App() {
 
               {/* Preferences Tab */}
               {activeTab === 'preferences' && (
-                <div className="glass-effect rounded-2xl p-6">
-                  <form onSubmit={handleSubmit} className="space-y-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div className="space-y-6">
-                        <h3 className="fancy-title text-2xl mb-4">Dietary Preferences</h3>
-                        <div className="space-y-4">
-                          {['vegan', 'vegetarian', 'gluten_free', 'halal'].map((pref) => (
-                            <label key={pref} className="flex items-center space-x-3 p-3 rounded-xl hover:bg-green-50 transition-colors">
-                              <input
-                                type="checkbox"
-                                name={pref}
-                                checked={preferences[pref as DietaryPreference]}
-                                onChange={handleInputChange}
-                                className="fancy-checkbox"
-                              />
-                              <span className="text-gray-700 capitalize">{pref.replace('_', ' ')}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-6">
-                        <h3 className="fancy-title text-2xl mb-4">Nutritional Goals</h3>
+                <>
+                  <MenuScraper 
+                    onSuccess={(data) => {
+                      // Handle the scraped menu data
+                      console.log('Scraped menu data:', data);
+                      // You could update state here or trigger meal plan generation
+                    }}
+                    onError={(error) => setError(error)}
+                  />
+                  <div className="glass-effect rounded-2xl p-6">
+                    <form onSubmit={handleSubmit} className="space-y-8">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-6">
-                          <div>
-                            <label className="fancy-label">Target Calories</label>
-                            <input
-                              type="number"
-                              name="target_calories"
-                              value={preferences.target_calories}
-                              onChange={handleInputChange}
-                              className="fancy-input"
-                            />
+                          <h3 className="fancy-title text-2xl mb-4">Dietary Preferences</h3>
+                          <div className="space-y-4">
+                            {['vegan', 'vegetarian', 'gluten_free', 'halal'].map((pref) => (
+                              <label key={pref} className="flex items-center space-x-3 p-3 rounded-xl hover:bg-green-50 transition-colors">
+                                <input
+                                  type="checkbox"
+                                  name={pref}
+                                  checked={preferences[pref as DietaryPreference]}
+                                  onChange={handleInputChange}
+                                  className="fancy-checkbox"
+                                />
+                                <span className="text-gray-700 capitalize">{pref.replace('_', ' ')}</span>
+                              </label>
+                            ))}
                           </div>
-                          <div>
-                            <label className="fancy-label">Target Protein (g)</label>
-                            <input
-                              type="number"
-                              name="target_protein"
-                              value={preferences.target_protein}
-                              onChange={handleInputChange}
-                              className="fancy-input"
-                            />
+                        </div>
+                        
+                        <div className="space-y-6">
+                          <h3 className="fancy-title text-2xl mb-4">Nutritional Goals</h3>
+                          <div className="space-y-6">
+                            <div>
+                              <label className="fancy-label">Target Calories</label>
+                              <input
+                                type="number"
+                                name="target_calories"
+                                value={preferences.target_calories}
+                                onChange={handleInputChange}
+                                className="fancy-input"
+                              />
+                            </div>
+                            <div>
+                              <label className="fancy-label">Target Protein (g)</label>
+                              <input
+                                type="number"
+                                name="target_protein"
+                                value={preferences.target_protein}
+                                onChange={handleInputChange}
+                                className="fancy-input"
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="flex justify-end space-x-4">
-                      <button type="submit" className="btn-primary" disabled={loading}>
-                        {loading ? 'Generating...' : 'Generate Meal Plan'}
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                      <div className="flex justify-end space-x-4">
+                        <button type="submit" className="btn-primary" disabled={loading}>
+                          {loading ? 'Generating...' : 'Generate Meal Plan'}
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </>
               )}
 
               {/* Meal Plan Tab */}

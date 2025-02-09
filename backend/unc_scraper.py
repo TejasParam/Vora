@@ -21,6 +21,10 @@ class UNCDiningScaper:
             "lenoir": "?date=2025-02-10"
         }
         
+    def set_url(self, url: str):
+        """Update the base URL for scraping"""
+        self.base_url = url
+        
     def get_driver(self):
         chrome_options = Options()
         chrome_options.add_argument("--headless")  # Run in headless mode
@@ -98,7 +102,7 @@ class UNCDiningScaper:
     def scrape_menu(self):
         try:
             driver = self.get_driver()
-            driver.get(f"{self.base_url}/{self.locations['lenoir']}")
+            driver.get(self.base_url)
             time.sleep(5)
             
             menu_items = []
