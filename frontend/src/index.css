@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -41,14 +41,23 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif;
-  @apply bg-gradient-to-br from-green-50 to-green-100;
-  background-color: #f0fdf4;  /* Light green background */
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg, #f8fafc 0%, #f0fdf4 50%, #f0f7ff 100%);
+  color: #1a1a1a;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+  letter-spacing: -0.02em;
+}
+
+.fancy-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  background: linear-gradient(120deg, #22c55e, #16a34a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button {
@@ -88,42 +97,182 @@ button:focus-visible {
   @apply text-green-600 border-green-600;
 }
 
-.card {
-  @apply bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100;
+.glass-effect {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.fancy-card {
+  @apply bg-white rounded-2xl p-6 shadow-lg;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+  background: linear-gradient(145deg, #ffffff, #f8fafc);
+}
+
+.fancy-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+}
+
+.fancy-input {
+  @apply w-full px-4 py-3 rounded-xl border transition-all duration-300;
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+.fancy-input:focus {
+  @apply ring-2 ring-green-500 border-green-500;
+  background: white;
+  transform: translateY(-1px);
+}
+
+.fancy-checkbox {
+  @apply h-5 w-5 rounded border-2 transition-all duration-200;
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.fancy-checkbox:checked {
+  @apply bg-green-500 border-green-500;
+  animation: checkmark 0.2s ease-in-out;
+}
+
+.fancy-label {
+  @apply block text-sm font-medium mb-1;
+  color: #374151;
+  letter-spacing: 0.01em;
 }
 
 .btn-primary {
-  @apply bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium;
+  @apply px-6 py-3 rounded-xl font-medium transition-all duration-300;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
 }
 
 .btn-secondary {
-  @apply bg-white text-green-600 px-4 py-2 rounded-lg hover:bg-green-50 transition-colors duration-200 font-medium border border-green-200;
+  @apply px-6 py-3 rounded-xl font-medium transition-all duration-300;
+  background: white;
+  color: #16a34a;
+  border: 2px solid rgba(34, 197, 94, 0.2);
 }
 
-.input-field {
-  @apply w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200;
+.btn-secondary:hover {
+  background: rgba(34, 197, 94, 0.05);
+  border-color: rgba(34, 197, 94, 0.4);
 }
 
-.progress-bar {
-  @apply h-2 bg-gray-200 rounded-full overflow-hidden;
+.fancy-tab {
+  @apply px-6 py-3 rounded-xl font-medium transition-all duration-300;
+  position: relative;
+  overflow: hidden;
 }
 
-.progress-bar-fill {
-  @apply h-full rounded-full bg-green-600 transition-all duration-300;
+.fancy-tab.active {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(22, 163, 74, 0.1));
+  color: #16a34a;
+}
+
+.fancy-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
 }
 
 .chat-message {
-  @apply p-4 rounded-lg mb-4 max-w-[80%];
+  @apply p-4 rounded-2xl mb-4 max-w-[80%] transition-all duration-300;
+  animation: messageSlide 0.3s ease-out;
 }
 
 .chat-message-user {
-  @apply bg-green-600 text-white ml-auto;
+  @apply ml-auto;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
 }
 
 .chat-message-assistant {
-  @apply bg-white border border-gray-200;
+  background: white;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.progress-bar {
+  @apply h-2 bg-gray-100 rounded-full overflow-hidden;
+}
+
+.progress-bar-fill {
+  @apply h-full rounded-full transition-all duration-500;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
 }
 
 .meal-grid {
   @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+}
+
+@keyframes messageSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(34, 197, 94, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 197, 94, 0.5);
 }

@@ -229,7 +229,7 @@ function App() {
       <div className="space-y-1">
         <div className="flex justify-between text-sm">
           <span>{label}</span>
-          <span>{Math.round(value)}/{Math.round(max)}{unit}</span>
+          <span className="font-medium text-gray-800">{Math.round(value)}/{Math.round(max)}{unit}</span>
         </div>
         <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
           <div 
@@ -244,70 +244,82 @@ function App() {
   const MealCard = ({ meal, type, isSelected }: { meal: MealInfo; type: keyof MealSelection; isSelected: boolean }) => (
     <div 
       onClick={() => handleMealSelect(type, meal)}
-      className={`bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer border-2
-        ${isSelected ? 'border-primary-500' : 'border-transparent'}`}
+      className={`fancy-card ${isSelected ? 'ring-2 ring-green-500' : ''}`}
     >
-      <h4 className="font-semibold text-lg text-gray-800">{meal.name}</h4>
-      <div className="mt-2 space-y-1 text-sm text-gray-600">
-        <p className="flex justify-between">
-          <span>Calories:</span>
-          <span className="font-medium">{meal.calories}</span>
-        </p>
-        <p className="flex justify-between">
-          <span>Protein:</span>
-          <span className="font-medium">{meal.protein}g</span>
-        </p>
-        <p className="flex justify-between">
-          <span>Carbs:</span>
-          <span className="font-medium">{meal.carbs}g</span>
-        </p>
-        <p className="flex justify-between">
-          <span>Fat:</span>
-          <span className="font-medium">{meal.fat}g</span>
-        </p>
-        <div className="mt-2 pt-2 border-t border-gray-200">
-          <p className="text-xs text-gray-500">Dietary Info:</p>
-          <p className="text-sm font-medium text-gray-700">{meal.dietary_restrictions}</p>
+      <div className="relative">
+        <div className="absolute -top-4 -right-4">
+          {isSelected && (
+            <div className="bg-green-500 text-white p-2 rounded-full shadow-lg">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+          )}
+        </div>
+      </div>
+      <h4 className="font-playfair text-xl font-semibold text-gray-800 mb-3">{meal.name}</h4>
+      <div className="space-y-3">
+        <MacroBar label="Calories" value={meal.calories} maxValue={800} />
+        <MacroBar label="Protein" value={meal.protein} maxValue={40} unit="g" />
+        <MacroBar label="Carbs" value={meal.carbs} maxValue={100} unit="g" />
+        <MacroBar label="Fat" value={meal.fat} maxValue={35} unit="g" />
+      </div>
+      <div className="mt-4 pt-3 border-t border-gray-100">
+        <p className="text-xs text-gray-500 mb-1">Dietary Info:</p>
+        <div className="flex flex-wrap gap-2">
+          {meal.dietary_restrictions.split(', ').map((restriction, index) => (
+            <span key={index} className="px-2 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium">
+              {restriction}
+            </span>
+          ))}
         </div>
       </div>
     </div>
-  )
+  );
+
+  const MacroBar = ({ label, value, maxValue, unit = '' }: { label: string; value: number; maxValue: number; unit?: string }) => {
+    const percentage = Math.min((value / maxValue) * 100, 100);
+    return (
+      <div className="space-y-1">
+        <div className="flex justify-between text-sm">
+          <span className="text-gray-600">{label}</span>
+          <span className="font-medium text-gray-800">{value}{unit}</span>
+        </div>
+        <div className="progress-bar">
+          <div 
+            className="progress-bar-fill"
+            style={{ width: `${percentage}%` }}
+          />
+        </div>
+      </div>
+    );
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold text-green-800 mb-4">Vora Meal Planner</h1>
-          <p className="text-xl text-gray-600">Your personal AI-powered nutrition assistant</p>
+        <div className="text-center mb-12 relative">
+          {/* Decorative Elements */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent"></div>
+          
+          <h1 className="fancy-title text-6xl mb-4">Vora</h1>
+          <p className="text-xl text-gray-600 font-light">Your Personal AI-Powered Nutrition Assistant</p>
+          
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent"></div>
         </div>
 
         {/* Tabs */}
         <div className="flex justify-center mb-8">
-          <nav className="flex space-x-4 bg-white rounded-lg p-1 shadow-md">
-            <button
-              onClick={() => setActiveTab('chat')}
-              className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
-                activeTab === 'chat' ? 'bg-green-100 text-green-600' : 'text-gray-600 hover:text-green-600'
-              }`}
-            >
-              Chat
-            </button>
-            <button
-              onClick={() => setActiveTab('preferences')}
-              className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
-                activeTab === 'preferences' ? 'bg-green-100 text-green-600' : 'text-gray-600 hover:text-green-600'
-              }`}
-            >
-              Preferences
-            </button>
-            <button
-              onClick={() => setActiveTab('meal-plan')}
-              className={`px-4 py-2 rounded-lg transition-colors duration-200 ${
-                activeTab === 'meal-plan' ? 'bg-green-100 text-green-600' : 'text-gray-600 hover:text-green-600'
-              }`}
-            >
-              Meal Plan
-            </button>
+          <nav className="glass-effect rounded-2xl p-1.5 shadow-lg">
+            {['chat', 'preferences', 'meal-plan'].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab as 'chat' | 'preferences' | 'meal-plan')}
+                className={`fancy-tab ${activeTab === tab ? 'active' : ''}`}
+              >
+                <span className="capitalize">{tab.replace('-', ' ')}</span>
+              </button>
+            ))}
           </nav>
         </div>
 
@@ -315,8 +327,8 @@ function App() {
         <div className="space-y-8">
           {/* Chat Tab */}
           {activeTab === 'chat' && (
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <div className="mb-6 max-h-[400px] overflow-y-auto">
+            <div className="glass-effect rounded-2xl p-6">
+              <div className="mb-6 max-h-[500px] overflow-y-auto custom-scrollbar">
                 {chatMessages.map((msg, index) => (
                   <div
                     key={index}
@@ -334,11 +346,21 @@ function App() {
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
                   placeholder="Tell me your dietary preferences..."
-                  className="input-field flex-grow"
+                  className="fancy-input flex-grow"
                   disabled={loading}
                 />
                 <button type="submit" className="btn-primary" disabled={loading}>
-                  {loading ? 'Processing...' : 'Send'}
+                  {loading ? (
+                    <span className="flex items-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Processing
+                    </span>
+                  ) : (
+                    'Send'
+                  )}
                 </button>
               </form>
             </div>
@@ -346,56 +368,54 @@ function App() {
 
           {/* Preferences Tab */}
           {activeTab === 'preferences' && (
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-gray-900">Dietary Preferences</h3>
-                    <div className="space-y-2">
+            <div className="glass-effect rounded-2xl p-6">
+              <form onSubmit={handleSubmit} className="space-y-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <h3 className="fancy-title text-2xl mb-4">Dietary Preferences</h3>
+                    <div className="space-y-4">
                       {['vegan', 'vegetarian', 'gluten_free', 'halal'].map((pref) => (
-                        <label key={pref} className="flex items-center space-x-3">
+                        <label key={pref} className="flex items-center space-x-3 p-3 rounded-xl hover:bg-green-50 transition-colors">
                           <input
                             type="checkbox"
                             name={pref}
                             checked={preferences[pref as DietaryPreference]}
                             onChange={handleInputChange}
-                            className="form-checkbox h-5 w-5 text-indigo-600"
+                            className="fancy-checkbox"
                           />
                           <span className="text-gray-700 capitalize">{pref.replace('_', ' ')}</span>
                         </label>
                       ))}
                     </div>
                   </div>
-                  <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-gray-900">Nutritional Goals</h3>
-                    <div className="space-y-4">
+                  
+                  <div className="space-y-6">
+                    <h3 className="fancy-title text-2xl mb-4">Nutritional Goals</h3>
+                    <div className="space-y-6">
                       <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                          Target Calories
-                        </label>
+                        <label className="fancy-label">Target Calories</label>
                         <input
                           type="number"
                           name="target_calories"
                           value={preferences.target_calories}
                           onChange={handleInputChange}
-                          className="input-field mt-1"
+                          className="fancy-input"
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium text-gray-700">
-                          Target Protein (g)
-                        </label>
+                        <label className="fancy-label">Target Protein (g)</label>
                         <input
                           type="number"
                           name="target_protein"
                           value={preferences.target_protein}
                           onChange={handleInputChange}
-                          className="input-field mt-1"
+                          className="fancy-input"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
+
                 <div className="flex justify-end space-x-4">
                   <button type="submit" className="btn-primary" disabled={loading}>
                     {loading ? 'Generating...' : 'Generate Meal Plan'}
@@ -407,11 +427,11 @@ function App() {
 
           {/* Meal Plan Tab */}
           {activeTab === 'meal-plan' && mealPlan && (
-            <div className="space-y-8">
+            <div className="space-y-8 animate-fade-in">
               {/* Macro Progress */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Daily Progress</h3>
-                <div className="space-y-4">
+              <div className="glass-effect rounded-2xl p-6">
+                <h3 className="fancy-title text-2xl mb-6">Daily Progress</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <MacroProgressBar
                     label="Calories"
                     value={calculateTotalMacros().calories}
@@ -429,8 +449,8 @@ function App() {
 
               {/* Meal Sections */}
               {['breakfast', 'lunch', 'dinner'].map((mealType) => (
-                <div key={mealType} className="bg-white rounded-xl shadow-lg p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 capitalize mb-6">{mealType}</h3>
+                <div key={mealType} className="glass-effect rounded-2xl p-6">
+                  <h3 className="fancy-title text-2xl mb-6 capitalize">{mealType}</h3>
                   <div className="meal-grid">
                     {mealPlan[mealType as keyof MealPlan].map((meal) => (
                       <MealCard
@@ -459,8 +479,13 @@ function App() {
         </div>
 
         {error && (
-          <div className="mt-4 p-4 bg-red-50 text-red-700 rounded-lg">
-            {error}
+          <div className="mt-4 p-4 bg-red-50 text-red-700 rounded-xl border border-red-100">
+            <div className="flex items-center">
+              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+              {error}
+            </div>
           </div>
         )}
       </div>

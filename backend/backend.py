@@ -120,7 +120,9 @@ def get_meal_recommendations(preferences):
         valid_items_mask = np.ones(len(df), dtype=bool)
         
         for pref_key, feature_key in dietary_mapping.items():
-            if preferences.get(pref_key):
+            # Convert boolean values to bool type explicitly
+            pref_value = bool(preferences.get(pref_key, False))
+            if pref_value:
                 user_pref[feature_cols.index(feature_key)] = 1
                 # Strict filtering: only include items that match the dietary restriction
                 valid_items_mask &= (df[feature_key] == 1)
@@ -234,6 +236,7 @@ Always maintain a friendly, professional tone and keep the focus on food and nut
                 model="claude-3-opus-20240229",
                 max_tokens=2000,
                 temperature=0.7,
+                system=self.system_prompt,
                 messages=[{
                     "role": "user",
                     "content": f"""Previous conversation:
@@ -241,15 +244,15 @@ Always maintain a friendly, professional tone and keep the focus on food and nut
                     
                     Current message: {user_message}
                     
-                    Available foods: {', '.join(available_foods)}
+                    Available foods: {', '.join(list(available_foods)[:20])}... and more.
                     
                     Remember: Only discuss food and nutrition topics. If asked about anything else, 
                     politely redirect to food-related discussions."""
                 }]
             )
             
-            # Extract the response text
-            assistant_response = message.content[0].text
+            # Extract the response text - properly handle the response object
+            assistant_response = message.content[0].text if hasattr(message.content[0], 'text') else str(message.content)
             
             # Check if meal plan is requested
             meal_plan = None
