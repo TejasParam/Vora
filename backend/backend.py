@@ -14,6 +14,7 @@ from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 from auth import requires_auth, AuthError
 from pathlib import Path
+from unc_scraper import UNCDiningScaper
 
 # Load environment variables
 load_dotenv()
@@ -380,6 +381,9 @@ EXAMPLE RESPONSE FORMAT:
 # Initialize chatbot
 chatbot = ChatBot()
 
+# Add this after other imports
+scraper = UNCDiningScaper()
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -488,6 +492,36 @@ def get_user_ratings():
         })
     except Exception as e:
         print(f"Error in get_user_ratings: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/scrape_menu', methods=['POST'])
+@requires_auth
+def scrape_menu():
+    try:
+        data = request.json
+        url = data.get('url')
+        
+        if not url:
+            return jsonify({'error': 'URL is required'}), 400
+            
+        # Validate URL format
+        if not url.startswith(('http://', 'https://')):
+            return jsonify({'error': 'Invalid URL format'}), 400
+            
+        # Update scraper URL and scrape
+        scraper.base_url = url
+        menu_data = scraper.scrape_menu()
+        
+        if menu_data is None:
+            return jsonify({'error': 'Failed to scrape menu data'}), 500
+            
+        return jsonify({
+            'message': 'Menu scraped successfully',
+            'data': menu_data.to_dict('records')
+        })
+        
+    except Exception as e:
+        print(f"Error scraping menu: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
