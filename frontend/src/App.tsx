@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useAuth0 } from '@auth0/auth0-react'
+import { particlesConfig } from './particlesConfig'
 
 interface MealInfo {
   name: string
@@ -114,7 +115,7 @@ function App() {
       }
 
       const response = await axios.post(
-        'http://localhost:8000/get_meal_plan',
+        '/api/get_meal_plan',
         preferences,
         { headers }
       )
@@ -167,7 +168,7 @@ function App() {
       }
 
       const response = await axios.post(
-        'http://localhost:8000/chat',
+        '/api/chat',
         { message: userMessage.content },
         { headers }
       )
@@ -243,7 +244,7 @@ function App() {
     setError(null)
     
     try {
-      const response = await axios.post('http://localhost:8000/get_meal_plan', preferences)
+      const response = await axios.post('/api/get_meal_plan', preferences)
       if (response.data.error) {
         throw new Error(response.data.error)
       }
@@ -426,7 +427,7 @@ function App() {
       const userId = user?.sub
       
       await axios.post(
-        'http://localhost:8000/add_rating',
+        '/api/add_rating',
         { meal_name: mealName, rating },
         {
           headers: {
@@ -451,7 +452,7 @@ function App() {
       const token = await getAccessTokenSilently()
       const userId = user?.sub
       
-      const response = await axios.get('http://localhost:8000/get_user_ratings', {
+      const response = await axios.get('/api/get_user_ratings', {
         headers: {
           Authorization: `Bearer ${token}`,
           'X-User-Id': userId
@@ -470,6 +471,18 @@ function App() {
       fetchUserRatings()
     }
   }, [isAuthenticated])
+
+  useEffect(() => {
+    // Initialize particles.js
+    const initParticles = async () => {
+      const particlesJS = (window as any).particlesJS;
+      if (particlesJS) {
+        particlesJS('particles-js', particlesConfig);
+      }
+    };
+
+    initParticles();
+  }, []);
 
   const RatingStars = ({ mealName, currentRating = 0, onRate }: { mealName: string; currentRating?: number; onRate: (rating: number) => void }) => (
     <div className="flex items-center space-x-0.5">
@@ -550,216 +563,225 @@ function App() {
   )
 
   return (
-    <div className="min-h-screen">
-      {/* Navigation Header */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex-shrink-0">
-              <h1 className="text-4xl font-['Cormorant_Garamond'] font-bold text-gray-900" style={{ fontFamily: 'Cormorant Garamond, cursive' }}>Vora</h1>
-            </div>
-            <div className="flex items-center space-x-4">
-              {!isAuthenticated ? (
-                <button
-                  onClick={() => loginWithRedirect()}
-                  className="btn-primary"
-                >
-                  Log In
-                </button>
-              ) : (
-                <div className="flex items-center gap-4">
-                  <p className="text-gray-600">Welcome, {user?.name}</p>
+    <div className="min-h-screen relative">
+      {/* Particles container */}
+      <div 
+        id="particles-js" 
+        className="absolute inset-0"
+      />
+
+      {/* Main content with higher z-index */}
+      <div className="relative z-10">
+        {/* Navigation Header */}
+        <nav className="bg-white/80 backdrop-blur-sm shadow-sm">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center h-16">
+              <div className="flex-shrink-0">
+                <h1 className="text-4xl font-['Cormorant_Garamond'] font-bold text-gray-900" style={{ fontFamily: 'Cormorant Garamond, cursive' }}>Vora</h1>
+              </div>
+              <div className="flex items-center space-x-4">
+                {!isAuthenticated ? (
                   <button
-                    onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
-                    className="btn-secondary"
+                    onClick={() => loginWithRedirect()}
+                    className="btn-primary"
                   >
-                    Log Out
+                    Log In
                   </button>
+                ) : (
+                  <div className="flex items-center gap-4">
+                    <p className="text-gray-600">Welcome, {user?.name}</p>
+                    <button
+                      onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+                      className="btn-secondary"
+                    >
+                      Log Out
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <div className="py-8 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            {/* Tabs */}
+            <div className="flex justify-center mb-8">
+              <nav className="glass-effect rounded-2xl p-1.5 shadow-lg">
+                {['chat', 'preferences', 'meal-plan', 'ratings'].map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveTab(tab as typeof activeTab)}
+                    className={`fancy-tab ${activeTab === tab ? 'active' : ''}`}
+                  >
+                    <span className="capitalize">{tab.replace('-', ' ')}</span>
+                  </button>
+                ))}
+              </nav>
+            </div>
+
+            {/* Tab Content */}
+            <div className="space-y-8">
+              {/* Chat Tab */}
+              {activeTab === 'chat' && (
+                <div className="glass-effect rounded-2xl p-6">
+                  <div className="mb-6 max-h-[500px] overflow-y-auto custom-scrollbar">
+                    {chatMessages.map((msg, index) => (
+                      <ChatMessage key={index} message={msg} />
+                    ))}
+                  </div>
+                  <form onSubmit={handleChatSubmit} className="flex gap-4">
+                    <input
+                      type="text"
+                      value={userInput}
+                      onChange={(e) => setUserInput(e.target.value)}
+                      placeholder="Tell me your dietary preferences..."
+                      className="fancy-input flex-grow"
+                      disabled={loading}
+                    />
+                    <button type="submit" className="btn-primary" disabled={loading}>
+                      {loading ? (
+                        <span className="flex items-center">
+                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Processing
+                        </span>
+                      ) : (
+                        'Send'
+                      )}
+                    </button>
+                  </form>
                 </div>
               )}
-            </div>
-          </div>
-        </div>
-      </nav>
 
-      <div className="py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Tabs */}
-          <div className="flex justify-center mb-8">
-            <nav className="glass-effect rounded-2xl p-1.5 shadow-lg">
-              {['chat', 'preferences', 'meal-plan', 'ratings'].map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab as typeof activeTab)}
-                  className={`fancy-tab ${activeTab === tab ? 'active' : ''}`}
-                >
-                  <span className="capitalize">{tab.replace('-', ' ')}</span>
-                </button>
-              ))}
-            </nav>
-          </div>
-
-          {/* Tab Content */}
-          <div className="space-y-8">
-            {/* Chat Tab */}
-            {activeTab === 'chat' && (
-              <div className="glass-effect rounded-2xl p-6">
-                <div className="mb-6 max-h-[500px] overflow-y-auto custom-scrollbar">
-                  {chatMessages.map((msg, index) => (
-                    <ChatMessage key={index} message={msg} />
-                  ))}
-                </div>
-                <form onSubmit={handleChatSubmit} className="flex gap-4">
-                  <input
-                    type="text"
-                    value={userInput}
-                    onChange={(e) => setUserInput(e.target.value)}
-                    placeholder="Tell me your dietary preferences..."
-                    className="fancy-input flex-grow"
-                    disabled={loading}
-                  />
-                  <button type="submit" className="btn-primary" disabled={loading}>
-                    {loading ? (
-                      <span className="flex items-center">
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Processing
-                      </span>
-                    ) : (
-                      'Send'
-                    )}
-                  </button>
-                </form>
-              </div>
-            )}
-
-            {/* Preferences Tab */}
-            {activeTab === 'preferences' && (
-              <div className="glass-effect rounded-2xl p-6">
-                <form onSubmit={handleSubmit} className="space-y-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div className="space-y-6">
-                      <h3 className="fancy-title text-2xl mb-4">Dietary Preferences</h3>
-                      <div className="space-y-4">
-                        {['vegan', 'vegetarian', 'gluten_free', 'halal'].map((pref) => (
-                          <label key={pref} className="flex items-center space-x-3 p-3 rounded-xl hover:bg-green-50 transition-colors">
+              {/* Preferences Tab */}
+              {activeTab === 'preferences' && (
+                <div className="glass-effect rounded-2xl p-6">
+                  <form onSubmit={handleSubmit} className="space-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="space-y-6">
+                        <h3 className="fancy-title text-2xl mb-4">Dietary Preferences</h3>
+                        <div className="space-y-4">
+                          {['vegan', 'vegetarian', 'gluten_free', 'halal'].map((pref) => (
+                            <label key={pref} className="flex items-center space-x-3 p-3 rounded-xl hover:bg-green-50 transition-colors">
+                              <input
+                                type="checkbox"
+                                name={pref}
+                                checked={preferences[pref as DietaryPreference]}
+                                onChange={handleInputChange}
+                                className="fancy-checkbox"
+                              />
+                              <span className="text-gray-700 capitalize">{pref.replace('_', ' ')}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-6">
+                        <h3 className="fancy-title text-2xl mb-4">Nutritional Goals</h3>
+                        <div className="space-y-6">
+                          <div>
+                            <label className="fancy-label">Target Calories</label>
                             <input
-                              type="checkbox"
-                              name={pref}
-                              checked={preferences[pref as DietaryPreference]}
+                              type="number"
+                              name="target_calories"
+                              value={preferences.target_calories}
                               onChange={handleInputChange}
-                              className="fancy-checkbox"
+                              className="fancy-input"
                             />
-                            <span className="text-gray-700 capitalize">{pref.replace('_', ' ')}</span>
-                          </label>
+                          </div>
+                          <div>
+                            <label className="fancy-label">Target Protein (g)</label>
+                            <input
+                              type="number"
+                              name="target_protein"
+                              value={preferences.target_protein}
+                              onChange={handleInputChange}
+                              className="fancy-input"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end space-x-4">
+                      <button type="submit" className="btn-primary" disabled={loading}>
+                        {loading ? 'Generating...' : 'Generate Meal Plan'}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
+
+              {/* Meal Plan Tab */}
+              {activeTab === 'meal-plan' && mealPlan && (
+                <div className="space-y-8 animate-fade-in">
+                  {/* Macro Progress */}
+                  <div className="glass-effect rounded-2xl p-6">
+                    <h3 className="fancy-title text-2xl mb-6">Daily Progress</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <MacroProgressBar
+                        label="Calories"
+                        value={calculateTotalMacros().calories}
+                        max={preferences.target_calories}
+                        unit="kcal"
+                      />
+                      <MacroProgressBar
+                        label="Protein"
+                        value={calculateTotalMacros().protein}
+                        max={preferences.target_protein}
+                        unit="g"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Meal Sections */}
+                  {['breakfast', 'lunch', 'dinner'].map((mealType) => (
+                    <div key={mealType} className="glass-effect rounded-2xl p-6">
+                      <h3 className="fancy-title text-2xl mb-6 capitalize">{mealType}</h3>
+                      <div className="meal-grid">
+                        {mealPlan[mealType as keyof MealPlan].map((meal) => (
+                          <MealCard
+                            key={meal.name}
+                            meal={meal}
+                            type={mealType as keyof MealSelection}
+                            isSelected={selectedMeals[mealType as keyof MealSelection].some(
+                              (m) => m.name === meal.name
+                            )}
+                          />
                         ))}
                       </div>
                     </div>
-                    
-                    <div className="space-y-6">
-                      <h3 className="fancy-title text-2xl mb-4">Nutritional Goals</h3>
-                      <div className="space-y-6">
-                        <div>
-                          <label className="fancy-label">Target Calories</label>
-                          <input
-                            type="number"
-                            name="target_calories"
-                            value={preferences.target_calories}
-                            onChange={handleInputChange}
-                            className="fancy-input"
-                          />
-                        </div>
-                        <div>
-                          <label className="fancy-label">Target Protein (g)</label>
-                          <input
-                            type="number"
-                            name="target_protein"
-                            value={preferences.target_protein}
-                            onChange={handleInputChange}
-                            className="fancy-input"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  ))}
 
                   <div className="flex justify-end space-x-4">
-                    <button type="submit" className="btn-primary" disabled={loading}>
-                      {loading ? 'Generating...' : 'Generate Meal Plan'}
+                    <button onClick={handleClearSelections} className="btn-secondary">
+                      Clear Selections
+                    </button>
+                    <button onClick={handleRegenerate} className="btn-primary" disabled={loading}>
+                      {loading ? 'Regenerating...' : 'Regenerate Plan'}
                     </button>
                   </div>
-                </form>
-              </div>
-            )}
-
-            {/* Meal Plan Tab */}
-            {activeTab === 'meal-plan' && mealPlan && (
-              <div className="space-y-8 animate-fade-in">
-                {/* Macro Progress */}
-                <div className="glass-effect rounded-2xl p-6">
-                  <h3 className="fancy-title text-2xl mb-6">Daily Progress</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <MacroProgressBar
-                      label="Calories"
-                      value={calculateTotalMacros().calories}
-                      max={preferences.target_calories}
-                      unit="kcal"
-                    />
-                    <MacroProgressBar
-                      label="Protein"
-                      value={calculateTotalMacros().protein}
-                      max={preferences.target_protein}
-                      unit="g"
-                    />
-                  </div>
                 </div>
+              )}
 
-                {/* Meal Sections */}
-                {['breakfast', 'lunch', 'dinner'].map((mealType) => (
-                  <div key={mealType} className="glass-effect rounded-2xl p-6">
-                    <h3 className="fancy-title text-2xl mb-6 capitalize">{mealType}</h3>
-                    <div className="meal-grid">
-                      {mealPlan[mealType as keyof MealPlan].map((meal) => (
-                        <MealCard
-                          key={meal.name}
-                          meal={meal}
-                          type={mealType as keyof MealSelection}
-                          isSelected={selectedMeals[mealType as keyof MealSelection].some(
-                            (m) => m.name === meal.name
-                          )}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                ))}
-
-                <div className="flex justify-end space-x-4">
-                  <button onClick={handleClearSelections} className="btn-secondary">
-                    Clear Selections
-                  </button>
-                  <button onClick={handleRegenerate} className="btn-primary" disabled={loading}>
-                    {loading ? 'Regenerating...' : 'Regenerate Plan'}
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Ratings Tab */}
-            {activeTab === 'ratings' && <RatingsTab />}
-          </div>
-
-          {error && (
-            <div className="mt-4 p-4 bg-red-50 text-red-700 rounded-xl border border-red-100">
-              <div className="flex items-center">
-                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                </svg>
-                {error}
-              </div>
+              {/* Ratings Tab */}
+              {activeTab === 'ratings' && <RatingsTab />}
             </div>
-          )}
+
+            {error && (
+              <div className="mt-4 p-4 bg-red-50 text-red-700 rounded-xl border border-red-100">
+                <div className="flex items-center">
+                  <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                  </svg>
+                  {error}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
