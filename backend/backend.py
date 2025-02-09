@@ -13,6 +13,7 @@ from datetime import datetime
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 from auth import requires_auth, AuthError
+from pathlib import Path
 
 # Load environment variables
 load_dotenv()
@@ -47,6 +48,28 @@ feature_cols = ['Calories', 'Total Fat', 'Total Carbohydrates', 'Protein', 'Vega
 features = df[feature_cols].values
 scaler = StandardScaler()
 features = scaler.fit_transform(features)
+
+# Add ratings storage
+ratings_db = {}  # Format: {user_id: [{meal_name: str, rating: int, date: str}]}
+
+def load_ratings():
+    """Load ratings from JSON file"""
+    ratings_file = Path('ratings.json')
+    if ratings_file.exists():
+        try:
+            with open(ratings_file, 'r') as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            return {}
+    return {}
+
+def save_ratings():
+    """Save ratings to JSON file"""
+    with open('ratings.json', 'w') as f:
+        json.dump(ratings_db, f)
+
+# Initialize ratings from file
+ratings_db = load_ratings()
 
 def extract_preferences_from_text(text):
     """Extract dietary preferences and restrictions from natural language input"""
@@ -409,6 +432,63 @@ def chat():
             'message': "I apologize, but I encountered an error while processing your request. "
                       "Could you please rephrase or try again?"
         }), 500
+
+@app.route('/add_rating', methods=['POST'])
+@requires_auth
+def add_rating():
+    try:
+        data = request.json
+        user_id = request.headers.get('X-User-Id')
+        
+        if not user_id:
+            return jsonify({'error': 'User ID is required'}), 400
+            
+        meal_name = data.get('meal_name')
+        rating = data.get('rating')
+        
+        if not meal_name or not isinstance(rating, int) or rating < 1 or rating > 5:
+            return jsonify({'error': 'Invalid rating data'}), 400
+            
+        if user_id not in ratings_db:
+            ratings_db[user_id] = []
+            
+        # Add new rating with timestamp
+        ratings_db[user_id].append({
+            'meal_name': meal_name,
+            'rating': rating,
+            'date': datetime.now().isoformat()
+        })
+        
+        # Save ratings to file
+        save_ratings()
+        
+        return jsonify({'message': 'Rating added successfully'})
+    except Exception as e:
+        print(f"Error in add_rating: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/get_user_ratings', methods=['GET'])
+@requires_auth
+def get_user_ratings():
+    try:
+        user_id = request.headers.get('X-User-Id')
+        
+        if not user_id:
+            return jsonify({'error': 'User ID is required'}), 400
+            
+        user_ratings = ratings_db.get(user_id, [])
+        
+        # Get favorite meals (rated 4 or higher out of 5)
+        favorites = [r for r in user_ratings if r['rating'] >= 4]
+        favorites.sort(key=lambda x: x['rating'], reverse=True)
+        
+        return jsonify({
+            'all_ratings': user_ratings,
+            'favorites': favorites
+        })
+    except Exception as e:
+        print(f"Error in get_user_ratings: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
