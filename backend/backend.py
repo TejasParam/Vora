@@ -10,6 +10,8 @@ import os
 import re
 import json
 from datetime import datetime
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 
 # Load environment variables
 load_dotenv()
@@ -185,44 +187,47 @@ def get_meal_recommendations(preferences):
 class ChatBot:
     def __init__(self):
         self.context = []
-        self.system_prompt = """You are Vora, an AI nutritionist assistant. Be conversational, friendly, and professional.
+        self.system_prompt = """You are Vora, a food and nutrition assistant. Your purpose is to help users with food-related questions and meal planning.
 
-Key behaviors:
-1. If users ask general nutrition questions, provide helpful advice without generating a meal plan
-2. If users share preferences or ask for meal plans, extract their preferences and explain your recommendations
-3. If users ask about specific foods or nutrients, provide detailed nutritional information
-4. Remember context from previous messages and refer back to earlier discussions when relevant
-5. If users express concerns or challenges, show empathy and offer practical solutions
-6. Encourage healthy eating habits but avoid being prescriptive or judgmental
+CORE RULES:
+1. ONLY discuss food and nutrition topics
+2. If users ask about non-food topics, politely redirect them to food-related discussions
+3. When suggesting meals, only recommend items from our food database
+4. Focus on being helpful and informative about nutrition and meal choices
 
-Example interactions:
-- "How much protein do I need?" → Explain protein requirements and good sources
-- "I want a vegan meal plan" → Generate and explain a meal plan
-- "Is quinoa healthy?" → Discuss nutritional benefits
-- "I struggle with meal prep" → Offer practical tips and strategies
+TOPICS YOU CAN DISCUSS:
+- Meal recommendations
+- Nutritional information
+- Dietary preferences (vegan, vegetarian, etc.)
+- Food choices and meal planning
+- Basic nutrition information
 
-Always maintain a supportive, educational tone while keeping responses concise and actionable."""
-    
+TOPICS TO AVOID:
+- Medical advice
+- Exercise/fitness
+- Weight loss
+- Any non-food topics
+
+Always maintain a friendly, professional tone and keep the focus on food and nutrition."""
+
     def add_to_context(self, role: str, content: str):
         self.context.append({"role": role, "content": content})
         if len(self.context) > 10:
             self.context = self.context[-10:]
-    
+
     def generate_response(self, user_message: str) -> dict:
         try:
             # Add user message to context
             self.add_to_context("user", user_message)
             
+            # Get available foods for context
+            available_foods = set(df['Food Name'].tolist())
+            
             # Format context for Claude
             formatted_context = "\n".join([
                 f"{msg['role']}: {msg['content']}" 
-                for msg in self.context[-5:]  # Only use last 5 messages
+                for msg in self.context[-5:]
             ])
-            
-            print("Sending request to Claude with:")  # Debug print
-            print(f"System prompt: {self.system_prompt}")
-            print(f"Context: {formatted_context}")
-            print(f"User message: {user_message}")
             
             # Get response from Claude
             message = client.messages.create(
@@ -236,21 +241,20 @@ Always maintain a supportive, educational tone while keeping responses concise a
                     
                     Current message: {user_message}
                     
-                    Respond as a friendly nutritionist. If the user is asking for a meal plan, provide detailed recommendations. If it's a general nutrition question, provide helpful information. Keep the conversation natural and end with a relevant follow-up question."""
+                    Available foods: {', '.join(available_foods)}
+                    
+                    Remember: Only discuss food and nutrition topics. If asked about anything else, 
+                    politely redirect to food-related discussions."""
                 }]
             )
             
             # Extract the response text
             assistant_response = message.content[0].text
-            print(f"Claude response: {assistant_response}")  # Debug print
             
-            # Generate meal plan only if it's requested
+            # Check if meal plan is requested
             meal_plan = None
             preferences = None
-            meal_plan_keywords = ['meal plan', 'diet plan', 'what should i eat', 'plan my meals', 'create a plan']
-            is_meal_plan_request = any(keyword in user_message.lower() for keyword in meal_plan_keywords)
-            
-            if is_meal_plan_request:
+            if any(keyword in user_message.lower() for keyword in ['meal plan', 'plan my meals', 'what should i eat']):
                 preferences = extract_preferences_from_text(user_message)
                 meal_plan = get_meal_recommendations(preferences)
             
@@ -266,14 +270,9 @@ Always maintain a supportive, educational tone while keeping responses concise a
         except Exception as e:
             print(f"Error in generate_response: {str(e)}")
             import traceback
-            traceback.print_exc()  # Print full error traceback
-            import sys
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            print(f"Exception type: {exc_type}")
-            print(f"Exception value: {exc_value}")
-            print(f"Line number: {exc_traceback.tb_lineno}")
+            traceback.print_exc()
             return {
-                "message": f"I apologize, but I encountered an error: {str(e)}. Please try again.",
+                "message": "I apologize, but I encountered an error. Please try asking another food-related question.",
                 "meal_plan": None,
                 "extracted_preferences": None
             }
