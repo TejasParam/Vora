@@ -196,29 +196,90 @@ CORE RULES:
 2. If users ask about non-food topics, politely redirect them to food-related discussions
 3. When suggesting meals, only recommend items from our food database
 4. Focus on being helpful and informative about nutrition and meal choices
+5. Format responses with clear spacing and bullet points for readability
 
-TOPICS YOU CAN DISCUSS:
-- Meal recommendations
-- Nutritional information
-- Dietary preferences (vegan, vegetarian, etc.)
-- Food choices and meal planning
-- Basic nutrition information
+RESPONSE FORMATTING RULES:
+1. Add THREE empty lines between major sections (\\n\\n\\n)
+2. Add TWO empty lines between subsections (\\n\\n)
+3. Add ONE empty line between list items (\\n)
+4. Use bullet points (•) for all list items
+5. Indent sub-points with two spaces
+6. Use emojis for section headers
+7. Bold important text with **text**
+8. Never write paragraphs - always use lists
+9. Add horizontal lines (---) between major sections
 
-TOPICS TO AVOID:
-- Medical advice
-- Exercise/fitness
-- Weight loss
-- Any non-food topics
+EXAMPLE RESPONSE FORMAT:
 
-Always maintain a friendly, professional tone and keep the focus on food and nutrition."""
+👋 **Welcome!**\\n\\n\\n
+
+🍽️ **Meal Suggestions**\\n\\n
+
+• First meal option\\n
+  • Detail 1\\n
+  • Detail 2\\n\\n
+
+• Second meal option\\n
+  • Detail 1\\n
+  • Detail 2\\n\\n\\n
+
+💡 **Nutrition Tips**\\n\\n
+
+• Tip 1\\n
+  • Sub-detail\\n\\n
+
+• Tip 2\\n
+  • Sub-detail\\n\\n\\n
+
+---"""
 
     def add_to_context(self, role: str, content: str):
         self.context.append({"role": role, "content": content})
         if len(self.context) > 10:
             self.context = self.context[-10:]
 
+    def format_meal_summary(self, meal_plan):
+        """Format meal plan summary with clear spacing and organization"""
+        summary = "\\n\\n\\n-------------------------------------------\\n\\n\\n"
+        summary += "📋 **Your Personalized Meal Plan**\\n\\n\\n"
+        
+        total_calories = 0
+        total_protein = 0
+
+        for meal_type in ['breakfast', 'lunch', 'dinner']:
+            summary += f"🍽️ **{meal_type.capitalize()}**\\n\\n"
+            
+            for meal in meal_plan[meal_type]:
+                summary += f"• {meal['name']}\\n"
+                summary += f"  • Calories: {meal['calories']} cal\\n"
+                summary += f"  • Protein: {meal['protein']}g\\n"
+                if meal['dietary_restrictions'] != 'None':
+                    summary += f"  • Suitable for: {meal['dietary_restrictions']}\\n"
+                summary += "\\n"
+                total_calories += meal['calories']
+                total_protein += meal['protein']
+            
+            summary += "\\n\\n"
+
+        summary += "-------------------------------------------\\n\\n\\n"
+        
+        summary += "📊 **Daily Nutrition Totals**\\n\\n"
+        summary += f"• Total Calories: {total_calories} cal\\n"
+        summary += f"• Total Protein: {total_protein}g\\n\\n\\n"
+
+        summary += "💡 **Tips**\\n\\n"
+        summary += "• View the complete meal plan in the Meal Plan tab\\n"
+        summary += "• Click on meals to add them to your selection\\n"
+        summary += "• Track your daily nutrition progress in real-time\\n\\n\\n"
+        
+        summary += "-------------------------------------------"
+        return summary
+
     def generate_response(self, user_message: str) -> dict:
         try:
+            # Extract preferences from user message
+            preferences = extract_preferences_from_text(user_message)
+            
             # Add user message to context
             self.add_to_context("user", user_message)
             
@@ -226,8 +287,8 @@ Always maintain a friendly, professional tone and keep the focus on food and nut
             available_foods = set(df['Food Name'].tolist())
             
             # Format context for Claude
-            formatted_context = "\n".join([
-                f"{msg['role']}: {msg['content']}" 
+            formatted_context = "\\n\\n\\n".join([
+                f"{msg['role'].capitalize()}: {msg['content']}" 
                 for msg in self.context[-5:]
             ])
             
@@ -241,31 +302,43 @@ Always maintain a friendly, professional tone and keep the focus on food and nut
                     "role": "user",
                     "content": f"""Previous conversation:
                     {formatted_context}
-                    
+
                     Current message: {user_message}
-                    
-                    Available foods: {', '.join(list(available_foods)[:20])}... and more.
-                    
-                    Remember: Only discuss food and nutrition topics. If asked about anything else, 
-                    politely redirect to food-related discussions."""
+
+                    Available foods (sample): 
+                    {', '.join(list(available_foods)[:20])}... and more.
+
+                    Remember to format your response with:
+                    • THREE empty lines between major sections (\\n\\n\\n)
+                    • TWO empty lines between subsections (\\n\\n)
+                    • ONE empty line between list items (\\n)
+                    • Bullet points for all items (•)
+                    • Indentation for sub-points (two spaces)
+                    • Never use paragraphs - always use lists
+                    • Add horizontal lines between major sections (---)"""
                 }]
             )
             
-            # Extract the response text - properly handle the response object
+            # Extract the response text and ensure proper line breaks
             assistant_response = message.content[0].text if hasattr(message.content[0], 'text') else str(message.content)
             
-            # Check if meal plan is requested
-            meal_plan = None
-            preferences = None
-            if any(keyword in user_message.lower() for keyword in ['meal plan', 'plan my meals', 'what should i eat']):
-                preferences = extract_preferences_from_text(user_message)
-                meal_plan = get_meal_recommendations(preferences)
+            # Always generate a meal plan based on the conversation
+            meal_plan = get_meal_recommendations(preferences)
+            
+            # If meal plan was generated, add it to the response
+            if meal_plan:
+                meal_summary = self.format_meal_summary(meal_plan)
+                if "meal plan" not in assistant_response.lower():
+                    assistant_response += "\\n\\n\\n" + meal_summary
             
             # Add assistant's response to context
             self.add_to_context("assistant", assistant_response)
             
+            # Process the response to ensure proper line breaks
+            processed_response = assistant_response.replace('\\n', '\n')
+            
             return {
-                "message": assistant_response,
+                "message": processed_response,
                 "meal_plan": meal_plan,
                 "extracted_preferences": preferences
             }

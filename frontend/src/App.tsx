@@ -295,6 +295,18 @@ function App() {
     );
   };
 
+  const ChatMessage = ({ message }: { message: ChatMessage }) => (
+    <div
+      className={`chat-message ${
+        message.type === 'user' ? 'chat-message-user' : 'chat-message-assistant'
+      }`}
+    >
+      <pre className="whitespace-pre-wrap font-montserrat text-base">
+        {message.content}
+      </pre>
+    </div>
+  );
+
   return (
     <div className="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -330,14 +342,7 @@ function App() {
             <div className="glass-effect rounded-2xl p-6">
               <div className="mb-6 max-h-[500px] overflow-y-auto custom-scrollbar">
                 {chatMessages.map((msg, index) => (
-                  <div
-                    key={index}
-                    className={`chat-message ${
-                      msg.type === 'user' ? 'chat-message-user' : 'chat-message-assistant'
-                    }`}
-                  >
-                    {msg.content}
-                  </div>
+                  <ChatMessage key={index} message={msg} />
                 ))}
               </div>
               <form onSubmit={handleChatSubmit} className="flex gap-4">
