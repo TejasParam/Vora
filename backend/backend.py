@@ -4,10 +4,24 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics.pairwise import cosine_similarity
+from anthropic import Anthropic
+from dotenv import load_dotenv
+import os
 import re
+import json
+from datetime import datetime
+
+# Load environment variables
+load_dotenv()
+
+print(f"API Key loaded: {'*' * (len(os.getenv('ANTHROPIC_API_KEY')) - 8)}{os.getenv('ANTHROPIC_API_KEY')[-8:]}")
 
 app = Flask(__name__)
 CORS(app)
+
+# Initialize Anthropic client
+ANTHROPIC_API_KEY = os.getenv('ANTHROPIC_API_KEY')
+client = Anthropic(api_key=ANTHROPIC_API_KEY)
 
 # Load and preprocess the data
 df = pd.read_csv('Data_prep.csv')
@@ -85,36 +99,6 @@ def get_dietary_restrictions_text(food_item):
     if food_item['Organic']:
         restrictions.append('Organic')
     return ', '.join(restrictions) if restrictions else 'None'
-
-def generate_chat_response(preferences, meal_plan):
-    """Generate a natural language response based on the preferences and meal plan"""
-    response = "Based on your preferences, I've created a personalized meal plan for you.\n\n"
-    
-    # Add dietary restrictions summary
-    restrictions = []
-    if preferences['vegan']:
-        restrictions.append("vegan")
-    if preferences['vegetarian'] and not preferences['vegan']:
-        restrictions.append("vegetarian")
-    if preferences['gluten_free']:
-        restrictions.append("gluten-free")
-    if preferences['halal']:
-        restrictions.append("halal")
-    
-    if restrictions:
-        response += f"I've made sure all meals are {', '.join(restrictions)}. "
-    
-    response += f"The plan targets approximately {preferences['target_calories']} calories "
-    response += f"and {preferences['target_protein']}g of protein per day.\n\n"
-    
-    # Add meal plan details
-    for meal_type, meals in meal_plan.items():
-        response += f"{meal_type.capitalize()}:\n"
-        for meal in meals:
-            response += f"- {meal['name']} ({meal['calories']} cal, {meal['protein']}g protein)\n"
-        response += "\n"
-    
-    return response
 
 def get_meal_recommendations(preferences):
     """Generate meal recommendations based on user preferences with strict dietary restriction filtering"""
@@ -198,6 +182,105 @@ def get_meal_recommendations(preferences):
         print(f"Error in get_meal_recommendations: {str(e)}")
         return None
 
+class ChatBot:
+    def __init__(self):
+        self.context = []
+        self.system_prompt = """You are Vora, an AI nutritionist assistant. Be conversational, friendly, and professional.
+
+Key behaviors:
+1. If users ask general nutrition questions, provide helpful advice without generating a meal plan
+2. If users share preferences or ask for meal plans, extract their preferences and explain your recommendations
+3. If users ask about specific foods or nutrients, provide detailed nutritional information
+4. Remember context from previous messages and refer back to earlier discussions when relevant
+5. If users express concerns or challenges, show empathy and offer practical solutions
+6. Encourage healthy eating habits but avoid being prescriptive or judgmental
+
+Example interactions:
+- "How much protein do I need?" → Explain protein requirements and good sources
+- "I want a vegan meal plan" → Generate and explain a meal plan
+- "Is quinoa healthy?" → Discuss nutritional benefits
+- "I struggle with meal prep" → Offer practical tips and strategies
+
+Always maintain a supportive, educational tone while keeping responses concise and actionable."""
+    
+    def add_to_context(self, role: str, content: str):
+        self.context.append({"role": role, "content": content})
+        if len(self.context) > 10:
+            self.context = self.context[-10:]
+    
+    def generate_response(self, user_message: str) -> dict:
+        try:
+            # Add user message to context
+            self.add_to_context("user", user_message)
+            
+            # Format context for Claude
+            formatted_context = "\n".join([
+                f"{msg['role']}: {msg['content']}" 
+                for msg in self.context[-5:]  # Only use last 5 messages
+            ])
+            
+            print("Sending request to Claude with:")  # Debug print
+            print(f"System prompt: {self.system_prompt}")
+            print(f"Context: {formatted_context}")
+            print(f"User message: {user_message}")
+            
+            # Get response from Claude
+            message = client.messages.create(
+                model="claude-3-opus-20240229",
+                max_tokens=2000,
+                temperature=0.7,
+                messages=[{
+                    "role": "user",
+                    "content": f"""Previous conversation:
+                    {formatted_context}
+                    
+                    Current message: {user_message}
+                    
+                    Respond as a friendly nutritionist. If the user is asking for a meal plan, provide detailed recommendations. If it's a general nutrition question, provide helpful information. Keep the conversation natural and end with a relevant follow-up question."""
+                }]
+            )
+            
+            # Extract the response text
+            assistant_response = message.content[0].text
+            print(f"Claude response: {assistant_response}")  # Debug print
+            
+            # Generate meal plan only if it's requested
+            meal_plan = None
+            preferences = None
+            meal_plan_keywords = ['meal plan', 'diet plan', 'what should i eat', 'plan my meals', 'create a plan']
+            is_meal_plan_request = any(keyword in user_message.lower() for keyword in meal_plan_keywords)
+            
+            if is_meal_plan_request:
+                preferences = extract_preferences_from_text(user_message)
+                meal_plan = get_meal_recommendations(preferences)
+            
+            # Add assistant's response to context
+            self.add_to_context("assistant", assistant_response)
+            
+            return {
+                "message": assistant_response,
+                "meal_plan": meal_plan,
+                "extracted_preferences": preferences
+            }
+            
+        except Exception as e:
+            print(f"Error in generate_response: {str(e)}")
+            import traceback
+            traceback.print_exc()  # Print full error traceback
+            import sys
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            print(f"Exception type: {exc_type}")
+            print(f"Exception value: {exc_value}")
+            print(f"Line number: {exc_traceback.tb_lineno}")
+            return {
+                "message": f"I apologize, but I encountered an error: {str(e)}. Please try again.",
+                "meal_plan": None,
+                "extracted_preferences": None
+            }
+
+# Initialize chatbot
+chatbot = ChatBot()
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -230,26 +313,18 @@ def chat():
         data = request.json
         user_message = data.get('message', '')
         
-        # Extract preferences from the user's message
-        preferences = extract_preferences_from_text(user_message)
+        # Generate response using chatbot
+        response = chatbot.generate_response(user_message)
         
-        # Generate meal plan based on extracted preferences
-        meal_plan = get_meal_recommendations(preferences)
-        if meal_plan is None:
-            return jsonify({'error': 'Failed to generate meal plan'}), 500
-        
-        # Generate natural language response
-        response = generate_chat_response(preferences, meal_plan)
-        
-        return jsonify({
-            'message': response,
-            'meal_plan': meal_plan,
-            'extracted_preferences': preferences
-        })
+        return jsonify(response)
         
     except Exception as e:
         print(f"Error in chat endpoint: {str(e)}")
-        return jsonify({'error': str(e)}), 500
+        return jsonify({
+            'error': str(e),
+            'message': "I apologize, but I encountered an error while processing your request. "
+                      "Could you please rephrase or try again?"
+        }), 500
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
