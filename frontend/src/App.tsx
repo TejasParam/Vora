@@ -36,6 +36,9 @@ interface Preferences {
   target_protein: number;
 }
 
+type DietaryPreference = 'vegan' | 'vegetarian' | 'gluten_free' | 'halal';
+type NutritionalGoal = 'target_calories' | 'target_protein';
+
 function App() {
   const [preferences, setPreferences] = useState<Preferences>({
     vegan: false,
@@ -117,10 +120,27 @@ function App() {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target
-    setPreferences(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : Number(value)
-    }))
+    
+    if (type === 'checkbox' && isDietaryPreference(name)) {
+      setPreferences(prev => ({
+        ...prev,
+        [name]: checked
+      }))
+    } else if (type === 'number' && isNutritionalGoal(name)) {
+      const numValue = value === '' ? 0 : Math.max(0, parseInt(value))
+      setPreferences(prev => ({
+        ...prev,
+        [name]: numValue
+      }))
+    }
+  }
+
+  const isDietaryPreference = (name: string): name is DietaryPreference => {
+    return ['vegan', 'vegetarian', 'gluten_free', 'halal'].includes(name)
+  }
+
+  const isNutritionalGoal = (name: string): name is NutritionalGoal => {
+    return ['target_calories', 'target_protein'].includes(name)
   }
 
   const handleRegenerate = async () => {
@@ -337,7 +357,7 @@ function App() {
                           <input
                             type="checkbox"
                             name={pref}
-                            checked={preferences[pref as keyof typeof preferences]}
+                            checked={preferences[pref as DietaryPreference]}
                             onChange={handleInputChange}
                             className="form-checkbox h-5 w-5 text-indigo-600"
                           />
