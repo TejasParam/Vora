@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { useAuth0 } from '@auth0/auth0-react'
 
 interface MealInfo {
   name: string
@@ -65,6 +66,8 @@ function App() {
     dinner: []
   })
   const [activeTab, setActiveTab] = useState<'chat' | 'preferences' | 'meal-plan'>('chat')
+
+  const { isAuthenticated, user, loginWithRedirect, logout } = useAuth0()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -318,6 +321,28 @@ function App() {
           <p className="text-xl text-gray-600 font-light">Your Personal AI-Powered Nutrition Assistant</p>
           
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent"></div>
+
+          {/* Auth buttons */}
+          <div className="mt-6">
+            {!isAuthenticated ? (
+              <button
+                onClick={() => loginWithRedirect()}
+                className="btn-primary"
+              >
+                Log In
+              </button>
+            ) : (
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-gray-600">Welcome, {user?.name}</p>
+                <button
+                  onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+                  className="btn-secondary"
+                >
+                  Log Out
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Tabs */}
