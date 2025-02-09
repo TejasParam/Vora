@@ -12,6 +12,7 @@ import json
 from datetime import datetime
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
+from auth import requires_auth, AuthError
 
 # Load environment variables
 load_dotenv()
@@ -360,7 +361,14 @@ chatbot = ChatBot()
 def home():
     return render_template('index.html')
 
+@app.errorhandler(AuthError)
+def handle_auth_error(ex):
+    response = jsonify(ex.error)
+    response.status_code = ex.status_code
+    return response
+
 @app.route('/get_meal_plan', methods=['POST'])
+@requires_auth
 def get_meal_plan():
     try:
         data = request.json
@@ -383,6 +391,7 @@ def get_meal_plan():
         return jsonify({'error': str(e)}), 500
 
 @app.route('/chat', methods=['POST'])
+@requires_auth
 def chat():
     try:
         data = request.json
