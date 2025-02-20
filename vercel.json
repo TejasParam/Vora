@@ -2,14 +2,28 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/test.py",
-      "use": "@vercel/python@3.10.5"
+      "src": "api/**/*.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "frontend/**/*",
+      "use": "@vercel/static"
     }
   ],
+  "outputDirectory": "frontend/dist",
+  "buildCommand": "cd frontend && npm install && npm run build",
+  "installCommand": "npm install",
   "routes": [
     {
-      "src": "/api/test",
-      "dest": "/api/test.py"
+      "src": "/api/(.*)",
+      "dest": "/api/$1.py"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/"
     }
   ]
 }
