@@ -1,13 +1,13 @@
 from flask import Flask, jsonify, Request
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return jsonify({"message": "API is working!", "path": path})
+@app.route('/api/test', methods=['GET'])
+def test():
+    return jsonify({"message": "API is working!"})
 
-def handler(request: Request):
+def handler(request):
     """Handle incoming requests."""
-    with app.request_context(request):
-        return app
+    return app(request)
