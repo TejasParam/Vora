@@ -1,0 +1,221 @@
+Food Name,Location,Section,Calories,Total Fat,Total Carbohydrates,Protein,Sodium,Vegan,Vegetarian,Made Without Gluten,Halal,Organic
+Shrimp and Broccoli Stir- Fry,Top of Lenoir,THE KITCHEN TABLE,90.0,2.5,6.0,12.0,390.0,False,False,False,False,False
+Steamed Bok Choy,Top of Lenoir,THE KITCHEN TABLE,15.0,0.0,3.0,2.0,85.0,True,True,True,True,False
+Stir Fried Green Beans with Bok Choy,Top of Lenoir,THE KITCHEN TABLE,25.0,0.5,4.0,1.0,80.0,True,True,False,False,False
+Lo Mein Noodles,Top of Lenoir,THE KITCHEN TABLE,130.0,2.0,23.0,4.0,140.0,True,True,False,True,False
+Peppermint Stick Ice Cream,Top of Lenoir,ICE CREAM BAR,180.0,9.0,24.0,3.0,50.0,False,True,True,True,False
+Coffee Ice Cream,Top of Lenoir,ICE CREAM BAR,190.0,10.0,21.0,3.0,60.0,False,True,True,True,False
+Wildberry Sorbet,Top of Lenoir,ICE CREAM BAR,140.0,0.0,34.0,0.0,10.0,True,True,True,False,False
+Birthday Cake Ice Cream,Top of Lenoir,ICE CREAM BAR,180.0,8.0,27.0,2.0,55.0,False,True,True,False,False
+Chocolate Ice Cream,Top of Lenoir,ICE CREAM BAR,170.0,8.0,22.0,3.0,45.0,False,True,True,False,False
+Strawberry Cheesecake Ice Cream,Top of Lenoir,ICE CREAM BAR,190.0,8.0,27.0,2.0,65.0,False,True,False,False,False
+Vanilla Ice Cream,Top of Lenoir,ICE CREAM BAR,170.0,9.0,20.0,3.0,50.0,False,True,True,False,False
+Salted Caramel Craze Ice Cream,Top of Lenoir,ICE CREAM BAR,230.0,10.0,32.0,3.0,180.0,False,True,True,False,False
+Gummy Bears,Top of Lenoir,ICE CREAM BAR,100.0,0.0,23.0,2.0,5.0,False,False,False,False,False
+Chocolate Sprinkles,Top of Lenoir,ICE CREAM BAR,20.0,1.0,3.0,0.0,0.0,False,True,True,False,False
+Rainbow Sprinkles,Top of Lenoir,ICE CREAM BAR,25.0,1.0,4.0,0.0,0.0,True,True,True,False,False
+Oreo Cookie Crumbs,Top of Lenoir,ICE CREAM BAR,130.0,5.0,20.0,1.0,90.0,True,True,False,False,False
+Graham Cracker Crumbs,Top of Lenoir,ICE CREAM BAR,140.0,3.0,26.0,2.0,140.0,True,True,False,False,False
+Plant Based Meatball Pasta Bake,Top of Lenoir,PLANT FORWARD,390.0,8.0,58.0,22.0,810.0,True,True,False,False,False
+Sauteed Mixed Bell Peppers,Top of Lenoir,PLANT FORWARD,15.0,1.0,1.0,0.0,0.0,True,True,True,False,False
+Roasted Cauliflower,Top of Lenoir,PLANT FORWARD,45.0,2.0,7.0,2.0,35.0,True,True,True,False,False
+Steamed Green Peas,Top of Lenoir,PLANT FORWARD,70.0,0.0,13.0,5.0,65.0,True,True,True,False,False
+Marinara Sauce,Top of Lenoir,PLANT FORWARD,45.0,1.0,7.0,1.0,100.0,True,True,True,True,False
+Made Without Gluten Pasta,Top of Lenoir,PLANT FORWARD,190.0,1.0,44.0,4.0,0.0,True,True,True,True,False
+Southwest Style Sirloin,Top of Lenoir,SIMPLY PREPARED,240.0,15.0,2.0,26.0,260.0,False,False,True,False,False
+Sauteed Seasoned Corn,Top of Lenoir,SIMPLY PREPARED,100.0,3.0,19.0,3.0,30.0,True,True,True,False,False
+Mushrooms with Red Onions,Top of Lenoir,SIMPLY PREPARED,90.0,7.0,6.0,3.0,200.0,True,True,True,False,False
+Brown Rice,Top of Lenoir,SIMPLY PREPARED,110.0,1.0,23.0,2.0,5.0,True,True,True,False,False
+Berries and Cream Cake,Top of Lenoir,BAKERY,500.0,26.0,64.0,5.0,150.0,False,True,False,False,False
+Fudge Brownies,Top of Lenoir,BAKERY,250.0,7.0,44.0,3.0,200.0,False,True,False,False,False
+Rice Krispie Treats,Top of Lenoir,BAKERY,250.0,6.0,46.0,2.0,280.0,False,False,False,False,False
+Cookies,Top of Lenoir,BAKERY,130.0,6.0,19.0,1.0,120.0,False,True,False,False,False
+Coconut Date Ball,Top of Lenoir,SPECIALTY BAKERY,110.0,3.0,22.0,2.0,105.0,True,True,True,False,False
+Made Without Gluten Chocolate Chip Cookies,Top of Lenoir,SPECIALTY BAKERY,180.0,8.0,19.0,1.0,790.0,False,True,True,False,False
+Dirt Cup,Top of Lenoir,SPECIALTY BAKERY,180.0,5.0,33.0,2.0,220.0,False,False,False,False,False
+Italian Style Sausage,Top of Lenoir,PASTA BAR,130.0,12.0,2.0,5.0,280.0,False,False,True,False,False
+Fresh Roasted Yellow Squash & Zucchini,Top of Lenoir,PASTA BAR,45.0,2.5,4.0,1.0,65.0,True,True,True,True,False
+Whole Grain Pasta,Top of Lenoir,PASTA BAR,100.0,0.0,20.0,3.0,0.0,True,True,False,False,False
+Pasta Noodles,Top of Lenoir,PASTA BAR,160.0,1.0,33.0,6.0,10.0,True,True,False,False,False
+Marinara Sauce,Top of Lenoir,PASTA BAR,45.0,1.0,7.0,1.0,100.0,True,True,True,True,False
+Bolognese Sauce,Top of Lenoir,PASTA BAR,70.0,4.0,6.0,4.0,290.0,False,False,True,False,False
+White Alfredo Sauce,Top of Lenoir,PASTA BAR,180.0,13.0,10.0,6.0,320.0,False,True,True,False,False
+Turkey Kale Penne Bake,Top of Lenoir,INTERNATIONAL FLAVORS,200.0,6.0,25.0,15.0,260.0,False,False,False,False,False
+Dinner Rolls,Top of Lenoir,INTERNATIONAL FLAVORS,110.0,3.0,17.0,3.0,190.0,False,True,False,False,False
+Classic Cheese Pizza,Top of Lenoir,PIZZA,170.0,7.0,19.0,8.0,410.0,False,True,False,False,False
+Classic Pepperoni Pizza,Top of Lenoir,PIZZA,190.0,9.0,19.0,9.0,470.0,False,False,False,False,False
+Cheese Bread,Top of Lenoir,PIZZA,170.0,8.0,17.0,4.0,320.0,False,True,False,False,False
+Vegan Cheese Pizza,Top of Lenoir,PIZZA,150.0,3.0,30.0,1.0,250.0,True,True,True,False,False
+Primavera Pizza,Top of Lenoir,PIZZA,190.0,8.0,20.0,9.0,390.0,False,True,False,False,False
+Blackened Tofu,Top of Lenoir,BURRITOS & BOWLS,90.0,7.0,1.0,5.0,0.0,True,True,True,False,False
+Seasoned Taco Beef,Top of Lenoir,BURRITOS & BOWLS,160.0,11.0,2.0,10.0,460.0,False,False,False,False,False
+Chipotle Mayo,Top of Lenoir,BURRITOS & BOWLS,110.0,11.0,0.61,0.0,90.0,False,True,True,False,False
+Long Grain Brown Rice,Top of Lenoir,BURRITOS & BOWLS,100.0,0.0,21.0,3.0,0.0,True,True,True,False,False
+Cilantro Lime Rice,Top of Lenoir,BURRITOS & BOWLS,130.0,0.0,29.0,3.0,90.0,True,True,True,False,False
+White Tortilla,Top of Lenoir,BURRITOS & BOWLS,200.0,6.0,33.0,6.0,550.0,True,True,False,False,False
+Sour Cream,Top of Lenoir,BURRITOS & BOWLS,60.0,5.0,2.0,0.0,50.0,False,True,True,True,False
+Salsa Verde,Top of Lenoir,BURRITOS & BOWLS,5.0,0.0,1.0,0.0,70.0,True,True,True,True,False
+Jalapeno Slaw,Top of Lenoir,BURRITOS & BOWLS,30.0,2.0,3.0,0.0,240.0,True,True,True,True,False
+Jalapeno Peppers,Top of Lenoir,BURRITOS & BOWLS,0.0,0.0,0.79,0.0,430.0,True,True,True,False,False
+Lettuce,Top of Lenoir,BURRITOS & BOWLS,0.0,0.0,0.0,0.0,0.0,True,True,True,False,False
+Pico Salsa,Top of Lenoir,BURRITOS & BOWLS,5.0,0.0,2.0,0.0,120.0,True,True,True,False,False
+Guacamole Spread,Top of Lenoir,BURRITOS & BOWLS,60.0,4.5,3.0,0.94,100.0,True,True,True,False,False
+Pepper Onion Sautee,Top of Lenoir,BURRITOS & BOWLS,110.0,1.5,24.0,3.0,10.0,True,True,True,False,False
+Seasoned Black Beans,Top of Lenoir,BURRITOS & BOWLS,80.0,0.0,15.0,5.0,270.0,True,True,True,False,False
+Monterey Jack Cheese,Top of Lenoir,BURRITOS & BOWLS,100.0,9.0,0.0,6.0,180.0,False,True,True,False,False
+Shredded Cheddar Cheese,Top of Lenoir,BURRITOS & BOWLS,110.0,9.0,0.0,7.0,180.0,False,True,True,False,False
+Creamy Tomato Soup,Top of Lenoir,HOMEMADE SOUPS & SUSHI,160.0,10.0,16.0,5.0,480.0,False,True,False,False,False
+Jerk Chicken and Brown Rice Soup,Top of Lenoir,HOMEMADE SOUPS & SUSHI,90.0,3.0,12.0,4.0,260.0,False,False,False,False,False
+Creamy Queso Dip,Top of Lenoir,HOMEMADE SOUPS & SUSHI,60.0,5.0,1.0,3.0,240.0,False,False,True,False,False
+Salsa,Top of Lenoir,HOMEMADE SOUPS & SUSHI,5.0,0.0,2.0,0.0,200.0,True,True,True,False,False
+Tortilla Chips,Top of Lenoir,HOMEMADE SOUPS & SUSHI,470.0,26.0,55.0,6.0,370.0,True,True,True,True,False
+Pimento Cheese and Tomato Sandwich,Top of Lenoir,THE GRILL,610.0,41.0,35.0,26.0,1150.0,False,False,False,False,False
+Gardenburger® Black Bean Burger,Top of Lenoir,THE GRILL,120.0,3.0,16.0,11.0,730.0,True,True,False,True,False
+Curly Fries,Top of Lenoir,THE GRILL,260.0,16.0,27.0,3.0,580.0,True,True,False,False,False
+Veggie Toppings,Top of Lenoir,THE GRILL,15.0,0.0,3.0,0.55,115.0,True,True,True,False,False
+Hamburger Bun,Top of Lenoir,THE GRILL,150.0,1.5,30.0,6.0,270.0,True,True,False,False,False
+Vegan Sliced Cheese,Top of Lenoir,THE GRILL,60.0,4.5,4.0,0.0,180.0,True,True,True,False,False
+Udi's® Gluten-Free Hamburger Bun,Top of Lenoir,THE GRILL,190.0,5.0,32.0,5.0,360.0,False,True,True,False,False
+Sliced Yellow American Cheese,Top of Lenoir,THE GRILL,40.0,3.5,1.0,2.0,125.0,False,False,True,False,False
+Kale and Bulgur Tabbouleh,Top of Lenoir,SALAD BAR,80.0,3.0,12.0,3.0,90.0,False,False,False,False,False
+Penne Pasta Salad,Top of Lenoir,SALAD BAR,100.0,0.0,20.0,3.0,80.0,True,True,False,False,False
+Baby Spinach,Top of Lenoir,SALAD BAR,25.0,0.0,4.0,3.0,90.0,True,True,True,True,False
+Spring Salad Mix,Top of Lenoir,SALAD BAR,25.0,0.0,4.0,1.0,100.0,True,True,True,False,False
+Black Olives,Top of Lenoir,SALAD BAR,80.0,8.0,4.0,0.0,470.0,True,True,True,False,False
+Grape Tomatoes,Top of Lenoir,SALAD BAR,0.0,0.0,2.0,0.0,0.0,True,True,True,False,False
+Nonfat Vanilla Yogurt,Top of Lenoir,SALAD BAR,120.0,0.0,25.0,6.0,95.0,False,True,True,False,False
+Cucumbers,Top of Lenoir,SALAD BAR,0.0,0.0,1.0,0.0,0.0,True,True,True,True,False
+Shredded Carrots,Top of Lenoir,SALAD BAR,25.0,0.0,5.0,1.0,40.0,True,True,True,True,False
+Sliced Red Onion,Top of Lenoir,SALAD BAR,30.0,0.0,7.0,1.0,0.0,True,True,True,True,False
+Sliced Mushroom,Top of Lenoir,SALAD BAR,20.0,0.0,2.0,2.0,0.0,True,True,True,True,False
+Beets,Top of Lenoir,SALAD BAR,10.0,0.0,2.0,0.0,55.0,True,True,True,False,False
+Green Peas,Top of Lenoir,SALAD BAR,70.0,0.0,13.0,4.0,95.0,True,True,True,False,False
+Green Peppers,Top of Lenoir,SALAD BAR,5.0,0.0,1.0,0.0,0.0,True,True,True,False,False
+Banana Peppers,Top of Lenoir,SALAD BAR,0.0,0.0,0.0,0.0,630.0,True,True,True,False,False
+Diced Chicken,Top of Lenoir,SALAD BAR,100.0,2.0,0.0,19.0,210.0,False,False,True,True,False
+Bacon Pieces,Top of Lenoir,SALAD BAR,120.0,8.0,1.0,11.0,430.0,False,False,True,False,False
+Garbanzo Beans,Top of Lenoir,SALAD BAR,35.0,0.5,6.0,2.0,60.0,True,True,True,True,False
+Edamame,Top of Lenoir,SALAD BAR,160.0,7.0,12.0,14.0,30.0,True,True,True,True,False
+Black Beans,Top of Lenoir,SALAD BAR,20.0,0.0,4.0,1.0,85.0,True,True,True,False,False
+Quinoa,Top of Lenoir,SALAD BAR,35.0,0.5,6.0,1.0,0.0,True,True,True,False,False
+Tofu,Top of Lenoir,SALAD BAR,120.0,7.0,2.0,13.0,10.0,True,True,True,False,False
+Feta Cheese Crumbles,Top of Lenoir,SALAD BAR,80.0,6.0,0.99,5.0,310.0,False,True,True,False,False
+Raisins,Top of Lenoir,SALAD BAR,180.0,0.0,44.0,1.0,15.0,True,True,True,True,False
+Cantaloupe,Top of Lenoir,SALAD BAR,25.0,0.0,7.0,0.67,15.0,True,True,True,False,False
+Honeydew Melon,Top of Lenoir,SALAD BAR,40.0,0.0,10.0,1.0,20.0,True,True,True,True,False
+Diced Pineapple,Top of Lenoir,SALAD BAR,35.0,0.0,9.0,1.0,0.0,True,True,True,True,False
+Grapes,Top of Lenoir,SALAD BAR,50.0,0.0,14.0,0.54,0.0,True,True,True,False,False
+Applesauce,Top of Lenoir,SALAD BAR,45.0,0.0,12.0,0.0,10.0,True,True,True,False,False
+Nonfat Strawberry Yogurt,Top of Lenoir,SALAD BAR,120.0,0.0,24.0,6.0,95.0,False,True,True,False,False
+Low Fat Cottage Cheese,Top of Lenoir,SALAD BAR,80.0,1.0,5.0,13.0,440.0,False,True,True,False,False
+Cage-Free Hard-Boiled Egg,Top of Lenoir,SALAD BAR,80.0,5.0,0.56,6.0,60.0,False,True,True,False,False
+Shredded Cheddar Cheese,Top of Lenoir,SALAD BAR,110.0,9.0,0.0,7.0,180.0,False,True,True,False,False
+Ranch Dressing,Top of Lenoir,SALAD BAR,100.0,11.0,0.98,0.0,250.0,False,True,True,False,False
+Raspberry Vinaigrette,Top of Lenoir,SALAD BAR,150.0,16.0,3.0,0.0,25.0,False,False,False,False,False
+Balsamic Vinegar,Top of Lenoir,SALAD BAR,20.0,0.0,4.0,0.0,0.0,True,True,True,False,False
+Honey Mustard,Top of Lenoir,SALAD BAR,70.0,6.0,3.0,0.0,75.0,False,True,True,False,False
+Italian Dressing,Top of Lenoir,SALAD BAR,110.0,12.0,2.0,0.0,270.0,True,True,True,False,False
+Blue Cheese Dressing,Top of Lenoir,SALAD BAR,150.0,16.0,1.0,1.0,250.0,False,True,True,False,False
+Creamy Caesar Dressing,Top of Lenoir,SALAD BAR,150.0,16.0,1.0,1.0,280.0,False,False,True,False,False
+Oil and Vinegar,Top of Lenoir,SALAD BAR,190.0,21.0,1.0,0.0,0.0,True,True,True,False,False
+Hummus,Top of Lenoir,HUMMUS BAR,60.0,4.0,3.0,1.0,55.0,True,True,True,True,False
+Roasted Red Pepper Hummus,Top of Lenoir,HUMMUS BAR,70.0,5.0,5.0,2.0,135.0,True,True,True,False,False
+Baba Ghanoush,Top of Lenoir,HUMMUS BAR,90.0,5.0,11.0,2.0,290.0,True,True,True,True,False
+Pita Bread,Top of Lenoir,HUMMUS BAR,70.0,1.5,10.0,2.0,95.0,True,True,False,False,False
+Bulgar Tabbouleh,Top of Lenoir,HUMMUS BAR,260.0,6.0,45.0,8.0,200.0,True,True,False,True,False
+Cucumber & Tomato Salad,Top of Lenoir,HUMMUS BAR,35.0,0.0,8.0,1.0,75.0,True,True,True,False,False
+Tzatziki Sauce,Top of Lenoir,HUMMUS BAR,15.0,0.5,1.0,2.0,30.0,False,True,True,False,False
+Chickpea and Feta Salad,Top of Lenoir,HUMMUS BAR,250.0,11.0,28.0,11.0,530.0,False,True,True,False,False
+Frosted Flakes®,Top of Lenoir,CEREAL,170.0,0.0,42.0,3.0,190.0,False,True,False,False,False
+Oats and Honey Granola,Top of Lenoir,CEREAL,270.0,7.0,46.0,6.0,55.0,False,True,True,False,False
+Cinnamon Toast Crunch™,Top of Lenoir,CEREAL,120.0,2.5,23.0,0.91,200.0,False,True,False,False,False
+Apple Jacks,Top of Lenoir,CEREAL,110.0,1.0,23.0,0.0,170.0,False,True,False,False,False
+Lucky Charms™,Top of Lenoir,CEREAL,110.0,1.0,22.0,2.0,170.0,False,False,True,False,False
+Cheerios™,Top of Lenoir,CEREAL,80.0,1.0,16.0,3.0,100.0,False,True,True,False,False
+Golden Grahams,Top of Lenoir,CEREAL,110.0,1.0,26.0,2.0,240.0,False,False,False,False,False
+Frosted Mini Wheats,Top of Lenoir,CEREAL,140.0,0.5,33.0,4.0,0.0,False,False,False,False,False
+Wheat Bread Slice,Top of Lenoir,BREADS AND BAGELS,100.0,3.0,15.0,3.0,170.0,True,True,False,False,False
+White Bread,Top of Lenoir,BREADS AND BAGELS,100.0,2.5,16.0,3.0,190.0,True,True,False,False,False
+Multigrain Bagel,Top of Lenoir,BREADS AND BAGELS,270.0,2.0,56.0,11.0,580.0,True,True,False,True,False
+Blueberry Bagel,Top of Lenoir,BREADS AND BAGELS,290.0,0.0,61.0,9.0,530.0,True,True,False,True,False
+Poppy Seed Bagel,Top of Lenoir,BREADS AND BAGELS,290.0,0.5,59.0,10.0,560.0,True,True,False,True,False
+Sesame Bagel,Top of Lenoir,BREADS AND BAGELS,290.0,0.5,59.0,10.0,570.0,True,True,False,True,False
+Whole Wheat Bagel,Top of Lenoir,BREADS AND BAGELS,280.0,0.0,58.0,9.0,580.0,True,True,False,True,False
+Everything Bagel,Top of Lenoir,BREADS AND BAGELS,290.0,0.0,59.0,10.0,580.0,True,True,False,True,False
+French Toast Bagel,Top of Lenoir,BREADS AND BAGELS,280.0,0.0,59.0,9.0,600.0,True,True,False,True,False
+Cinnamon Raisin Bagel,Top of Lenoir,BREADS AND BAGELS,290.0,0.0,60.0,9.0,540.0,True,True,False,True,False
+Cheddar Jalapeno Bagel,Top of Lenoir,BREADS AND BAGELS,290.0,1.5,62.0,10.0,580.0,False,True,False,False,False
+Plain Bagel,Top of Lenoir,BREADS AND BAGELS,290.0,0.0,59.0,10.0,590.0,True,True,False,True,False
+Bob's Red Mill® Gluten Free Oats,Top of Lenoir,STRESS LESS CABINET,210.0,5.0,33.0,7.0,160.0,True,True,True,False,False
+Bob's Red Mill® GF Apple & Cinnamon Oats,Top of Lenoir,STRESS LESS CABINET,270.0,5.0,48.0,7.0,310.0,True,True,True,True,False
+Dolci di Maria Carrot Cake,Top of Lenoir,STRESS LESS CABINET,500.0,24.0,72.0,2.0,430.0,True,True,True,False,False
+Katz® Cinnamon Donut Holes,Top of Lenoir,STRESS LESS CABINET,110.0,5.0,15.0,0.99,150.0,False,True,True,False,False
+Katz® Glazed Donut Holes,Top of Lenoir,STRESS LESS CABINET,130.0,8.0,15.0,1.0,135.0,False,True,True,False,False
+Katz® Powdered Donut Holes,Top of Lenoir,STRESS LESS CABINET,170.0,10.0,19.0,1.0,160.0,False,True,True,False,False
+Kinnikinnick® Cinnamon Sugar Donuts,Top of Lenoir,STRESS LESS CABINET,180.0,7.0,29.0,2.0,220.0,False,True,True,False,False
+Kinnikinnick® Vanilla Glazed Donuts,Top of Lenoir,STRESS LESS CABINET,210.0,6.0,37.0,2.0,200.0,False,True,True,False,False
+MadeGood® Soft Baked Chocolate Chip Cookie,Top of Lenoir,STRESS LESS CABINET,120.0,6.0,14.0,1.0,65.0,True,True,True,False,False
+MadeGood® Soft Baked Double Chocolate Cookies,Top of Lenoir,STRESS LESS CABINET,120.0,6.0,14.0,1.0,0.0,True,True,True,False,False
+MadeGood® Vanilla Crispy Squares,Top of Lenoir,STRESS LESS CABINET,80.0,1.0,18.0,1.0,100.0,True,True,True,False,False
+O'Doughs® Everything Bagel,Top of Lenoir,STRESS LESS CABINET,200.0,4.5,38.0,4.0,530.0,True,True,True,False,False
+O'Doughs® Multigrain Sandwich Slices,Top of Lenoir,STRESS LESS CABINET,160.0,2.0,33.0,3.0,340.0,True,True,True,False,False
+O'Doughs® Original Bagel,Top of Lenoir,STRESS LESS CABINET,200.0,2.5,37.0,4.0,380.0,True,True,True,False,False
+O'Doughs® Original Sandwich Slices,Top of Lenoir,STRESS LESS CABINET,160.0,2.0,34.0,3.0,330.0,True,True,True,False,False
+O'Doughs® Pumpernickel Bagel,Top of Lenoir,STRESS LESS CABINET,200.0,6.0,38.0,5.0,350.0,True,True,True,False,False
+Schar Ciabatta Roll,Top of Lenoir,STRESS LESS CABINET,120.0,1.5,25.0,2.0,180.0,True,True,True,False,False
+Udi's® Blueberry Muffin,Top of Lenoir,STRESS LESS CABINET,260.0,9.0,40.0,3.0,260.0,False,True,True,False,False
+Udi's® Everything Bagel,Top of Lenoir,STRESS LESS CABINET,240.0,8.0,37.0,5.0,390.0,False,True,True,False,False
+Udi's® Gluten-Free Hamburger Bun,Top of Lenoir,STRESS LESS CABINET,190.0,5.0,32.0,5.0,360.0,False,True,True,False,False
+Udi's® Multigrain Bread,Top of Lenoir,STRESS LESS CABINET,140.0,5.0,23.0,2.0,260.0,False,True,True,False,False
+Udi's® Snickerdoodle Cookie,Top of Lenoir,STRESS LESS CABINET,220.0,8.0,36.0,1.0,150.0,False,True,True,False,False
+Udi's® White Bread,Top of Lenoir,STRESS LESS CABINET,140.0,5.0,24.0,2.0,270.0,False,True,True,False,False
+Red Plate Foods® Ginger Cookies,Top of Lenoir,STRESS LESS CABINET,160.0,6.0,23.0,1.0,160.0,True,True,True,True,False
+Red Plate Foods® Oatmeal Cookies,Top of Lenoir,STRESS LESS CABINET,150.0,5.0,25.0,1.0,100.0,True,True,True,True,False
+Red Plate Foods® Chocolate Chip Cookie,Top of Lenoir,STRESS LESS CABINET,160.0,7.0,23.0,1.0,140.0,True,True,True,True,False
+Red Plate Foods® Double Chocolate Chip Cookies,Top of Lenoir,STRESS LESS CABINET,160.0,7.0,22.0,2.0,110.0,True,True,True,True,False
+Red Plate Foods® Dark Chocolate Muffins,Top of Lenoir,STRESS LESS CABINET,350.0,12.0,61.0,4.0,410.0,True,True,True,False,False
+Red Plate Foods® Coffee Cake Muffin,Top of Lenoir,STRESS LESS CABINET,430.0,17.0,65.0,4.0,430.0,True,True,True,False,False
+Red Plate Foods® Lemon Blueberry Muffin,Top of Lenoir,STRESS LESS CABINET,370.0,15.0,58.0,2.0,320.0,True,True,True,True,False
+Southern Unsweet Tea,Top of Lenoir,BEVERAGES,0.0,0.0,0.0,0.0,15.0,True,True,True,False,False
+Southern Sweet Tea,Top of Lenoir,BEVERAGES,130.0,0.0,32.0,0.0,15.0,True,True,True,False,False
+SoBe® Lifewater Pomegranate,Top of Lenoir,BEVERAGES,0.0,0.0,0.0,0.0,45.0,True,True,True,False,False
+Maola® Skim Milk,Top of Lenoir,BEVERAGES,80.0,0.0,13.0,8.0,125.0,False,True,True,False,False
+Maola® 2% Reduced Fat Milk,Top of Lenoir,BEVERAGES,120.0,5.0,12.0,8.0,125.0,False,True,True,False,False
+Maola® 1% Chocolate Milk,Top of Lenoir,BEVERAGES,150.0,2.5,26.0,8.0,230.0,False,True,True,False,False
+Larry's® Decaf Coffee,Top of Lenoir,BEVERAGES,0.0,0.0,0.0,0.0,0.0,True,True,True,False,True
+Larry's® Coffee,Top of Lenoir,BEVERAGES,0.0,0.0,0.0,0.0,0.0,True,True,True,False,True
+100% Cranberry Juice,Top of Lenoir,BEVERAGES,140.0,0.0,36.0,0.0,35.0,True,True,True,False,False
+100% Apple Juice,Top of Lenoir,BEVERAGES,110.0,0.0,28.0,0.0,35.0,True,True,True,False,False
+100% Orange Juice,Top of Lenoir,BEVERAGES,120.0,0.0,31.0,0.0,35.0,True,True,True,False,False
+Strawberry Kiwi Juice,Top of Lenoir,BEVERAGES,120.0,0.0,30.0,0.0,40.0,True,True,True,False,False
+Dr. Pepper®,Top of Lenoir,BEVERAGES,140.0,0.0,39.0,0.0,45.0,True,True,True,False,False
+Diet Dr. Pepper®,Top of Lenoir,BEVERAGES,0.0,0.0,0.0,0.0,70.0,True,True,True,False,False
+Diet Mountain Dew®,Top of Lenoir,BEVERAGES,0.0,0.0,0.0,0.0,55.0,True,True,True,False,False
+Mountain Dew®,Top of Lenoir,BEVERAGES,170.0,0.0,44.0,0.0,50.0,True,True,True,False,False
+Gatorade® Fruit Punch,Top of Lenoir,BEVERAGES,80.0,0.0,22.0,0.0,170.0,True,True,True,False,False
+Gatorade® Orange,Top of Lenoir,BEVERAGES,80.0,0.0,22.0,0.0,170.0,True,True,True,False,False
+Starry,Top of Lenoir,BEVERAGES,150.0,0.0,39.0,0.0,35.0,True,True,True,False,False
+Pepsi® Zero Sugar,Top of Lenoir,BEVERAGES,0.0,0.0,0.0,0.0,65.0,True,True,True,False,False
+Pepsi®,Top of Lenoir,BEVERAGES,150.0,0.0,41.0,0.0,30.0,True,True,True,False,False
+Root Beer,Top of Lenoir,BEVERAGES,140.0,0.0,39.0,0.0,45.0,True,True,True,False,False
+Sunkist® Orange,Top of Lenoir,BEVERAGES,160.0,0.0,44.0,0.0,45.0,True,True,True,False,False
+Cheerwine®,Top of Lenoir,BEVERAGES,150.0,0.0,42.0,0.0,25.0,True,True,True,False,False
+Schweppes® Ginger Ale,Top of Lenoir,BEVERAGES,130.0,0.0,33.0,0.0,50.0,True,True,True,False,False
+Tropicana® Lemonade,Top of Lenoir,BEVERAGES,150.0,0.0,40.0,0.0,150.0,True,True,True,False,False
+Tropicana® Fruit Punch,Top of Lenoir,BEVERAGES,170.0,0.0,45.0,0.0,35.0,True,True,True,False,False
+Smart Balance,Top of Lenoir,CONDIMENTS AND SPREADS,100.0,11.0,0.0,0.0,90.0,True,True,True,False,False
+Sriracha Sauce,Top of Lenoir,CONDIMENTS AND SPREADS,5.0,0.0,1.0,0.0,105.0,True,True,True,False,False
+Honey Mustard,Top of Lenoir,CONDIMENTS AND SPREADS,70.0,6.0,3.0,0.0,75.0,False,True,True,False,False
+BBQ Sauce,Top of Lenoir,CONDIMENTS AND SPREADS,70.0,0.0,18.0,0.0,290.0,True,True,True,False,False
+Texas Pete® Hot Sauce,Top of Lenoir,CONDIMENTS AND SPREADS,0.0,0.0,0.0,0.0,115.0,True,True,True,False,False
+Yellow Mustard,Top of Lenoir,CONDIMENTS AND SPREADS,0.0,0.0,3.0,0.0,160.0,True,True,True,False,False
+French Vanilla Creamer,Top of Lenoir,CONDIMENTS AND SPREADS,35.0,1.5,5.0,0.0,5.0,False,True,True,False,False
+Original Creamer,Top of Lenoir,CONDIMENTS AND SPREADS,20.0,1.0,2.0,0.0,5.0,False,True,True,False,False
+Housemade Veggie Cream Cheese,Top of Lenoir,CONDIMENTS AND SPREADS,70.0,8.0,0.0,0.0,120.0,False,True,True,False,False
+Grape Jelly,Top of Lenoir,CONDIMENTS AND SPREADS,35.0,0.0,9.0,0.0,0.0,True,True,True,False,False
+Ketchup,Top of Lenoir,CONDIMENTS AND SPREADS,20.0,0.0,5.0,0.0,180.0,True,True,True,False,False
+Mayonnaise,Top of Lenoir,CONDIMENTS AND SPREADS,100.0,11.0,0.0,0.0,85.0,False,True,True,False,False
+Plain Cream Cheese,Top of Lenoir,CONDIMENTS AND SPREADS,50.0,4.5,2.0,1.0,90.0,False,True,True,False,False
+Strawberry Cream Cheese,Top of Lenoir,CONDIMENTS AND SPREADS,90.0,8.0,5.0,1.0,120.0,False,True,True,False,False
+Strawberry Jelly,Top of Lenoir,CONDIMENTS AND SPREADS,35.0,0.0,9.0,0.0,0.0,True,True,True,False,False
+Hazelnut Creamer,Top of Lenoir,CONDIMENTS AND SPREADS,35.0,1.5,5.0,0.0,5.0,False,True,True,False,False
