@@ -5,8 +5,6 @@
       "runtime": "python@3.9"
     }
   },
-  "buildCommand": "cd frontend && npm install && npm run build",
-  "installCommand": "npm install",
   "routes": [
     {
       "src": "/api/(.*)",
