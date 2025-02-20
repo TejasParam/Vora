@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "vercel-build": "./build.sh"
+    "build": "cd frontend && npm install && npm run build",
+    "vercel-build": "npm run build"
   }
 } 
