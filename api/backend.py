@@ -8,6 +8,10 @@ CORS(app)
 def test():
     return jsonify({"message": "API is working!"})
 
+@app.route('/api/hello', methods=['GET'])
+def hello():
+    return jsonify({"message": "Hello from Python backend!"})
+
 def handler(request):
     """Handle incoming requests."""
     return app(request)
