@@ -1,11 +1,5 @@
 {
   "version": 2,
-  "functions": {
-    "api/*.py": {
-      "runtime": "python@3.9",
-      "maxDuration": 10
-    }
-  },
   "outputDirectory": "frontend/dist",
   "buildCommand": "cd frontend && npm install && npm run build",
   "installCommand": "npm install",
